@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
@@ -15,7 +15,7 @@ import { setUserData } from "../../data/redux/slice/user";
 import {
   db,
   doc,
-  getDoc,
+  // getDoc,
   setPersistence,
   browserSessionPersistence,
   auth,
@@ -24,7 +24,7 @@ import {
 import { signInUser } from "../../domain/service";
 
 const LoginForm = () => {
-  const navigate = useNavigate();
+  const history = useHistory();
   const [formValues, setFormValues] = React.useState({
     email: "",
     password: "",
@@ -49,7 +49,7 @@ const LoginForm = () => {
             onSnapshot(doc(db, "users", resp.user.uid), (doc) => {
               console.log("Current data: ", doc.data());
               dispatch(setUserData(doc.data()));
-              navigate("/dashboard");
+              history.push("/dashboard");
             });
           })
           .catch((err) => {
@@ -140,7 +140,7 @@ const LoginForm = () => {
             <Button
               variant="text"
               sx={{ textTransform: "none" }}
-              onClick={() => navigate("/forgot-password")}
+              onClick={() => history.push("/forgot-password")}
             >
               Forgot password?
             </Button>

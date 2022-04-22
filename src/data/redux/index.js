@@ -7,6 +7,11 @@ import wdcReducer from "./slice/wdc";
 import partnersReducer from "./slice/partners";
 import resourcesReducer from "./slice/resources";
 import LGAsReducer from "./slice/lga";
+import homepageReducer from "./slice/homepage";
+import rsphcmbReducer from "./slice/rsphcmb";
+import contactReducer from "./slice/contact";
+import serviceReducer from "./slice/services";
+import enquiriesReducer from "./slice/enquiry";
 
 export default configureStore({
   reducer: {
@@ -18,6 +23,11 @@ export default configureStore({
     partners: partnersReducer,
     resources: resourcesReducer,
     lgas: LGAsReducer,
+    homepage: homepageReducer,
+    rsphcmb: rsphcmbReducer,
+    contact: contactReducer,
+    service: serviceReducer,
+    enquiries: enquiriesReducer,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({

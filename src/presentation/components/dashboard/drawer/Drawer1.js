@@ -10,7 +10,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import DashBoardIcon from "@mui/icons-material/DashboardOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@mui/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
@@ -22,6 +22,7 @@ import Skeleton from "@mui/material/Skeleton";
 import { auth } from "../../../../data/firebase";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../../../data/redux/slice/user";
+import { Logout, Settings } from "@mui/icons-material";
 
 const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
@@ -44,10 +45,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Drawer1 = (props) => {
   const classes = useStyles();
-  const { history, mobileOpen, setMobileOpen } = props;
+  const { mobileOpen, setMobileOpen } = props;
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
 
   const container =
@@ -55,40 +56,34 @@ const Drawer1 = (props) => {
 
   const drawerItems = [
     {
-      text: "Dashboard",
+      text: "Overview",
       icon: (
         <DashBoardIcon
-          style={
-            selectedIndex === 0 ? { color: "#4C3992" } : { color: "black" }
-          }
+          style={selectedIndex === 0 ? { color: "#white" } : { color: "black" }}
         />
       ),
-      to: "/admin/dashboard/",
+      to: "/dashboard/",
     },
     {
-      text: "Manage App",
+      text: "Home",
       icon: (
         <SchoolOutlinedIcon
-          style={
-            selectedIndex === 1 ? { color: "#4C3992" } : { color: "black" }
-          }
+          style={selectedIndex === 1 ? { color: "white" } : { color: "black" }}
         />
       ),
-      to: "/admin/dashboard/manage-app",
+      to: "/dashboard/home",
     },
     {
-      text: "Manage Users",
+      text: "About",
       icon: (
         <PeopleOutlinedIcon
-          style={
-            selectedIndex === 2 ? { color: "#4C3992" } : { color: "black" }
-          }
+          style={selectedIndex === 2 ? { color: "white" } : { color: "black" }}
         />
       ),
-      to: "/admin/dashboard/manage-users",
+      to: "/dashboard/about",
     },
     {
-      text: "Profile",
+      text: "Services",
       icon: (
         <PersonOutlineIcon
           style={
@@ -96,7 +91,85 @@ const Drawer1 = (props) => {
           }
         />
       ),
-      to: "/admin/dashboard/profile",
+      to: "/dashboard/services",
+    },
+    {
+      text: "Resources",
+      icon: (
+        <PersonOutlineIcon
+          style={
+            selectedIndex === 3 ? { color: "#4C3992" } : { color: "black" }
+          }
+        />
+      ),
+      to: "/dashboard/resources",
+    },
+    {
+      text: "Contact",
+      icon: (
+        <PersonOutlineIcon
+          style={
+            selectedIndex === 3 ? { color: "#4C3992" } : { color: "black" }
+          }
+        />
+      ),
+      to: "/dashboard/contact",
+    },
+    {
+      text: "Others",
+      icon: (
+        <PersonOutlineIcon
+          style={
+            selectedIndex === 3 ? { color: "#4C3992" } : { color: "black" }
+          }
+        />
+      ),
+      to: "/dashboard/others",
+    },
+    {
+      text: "Users",
+      icon: (
+        <PersonOutlineIcon
+          style={
+            selectedIndex === 3 ? { color: "#4C3992" } : { color: "black" }
+          }
+        />
+      ),
+      to: "/dashboard/users",
+    },
+    {
+      text: "Enquiries",
+      icon: (
+        <PersonOutlineIcon
+          style={
+            selectedIndex === 3 ? { color: "#4C3992" } : { color: "black" }
+          }
+        />
+      ),
+      to: "/dashboard/enquiries",
+    },
+  ];
+
+  const subDrawerItems = [
+    {
+      text: "Settings",
+      icon: (
+        <Settings
+          style={selectedIndex === 9 ? { color: "#white" } : { color: "black" }}
+        />
+      ),
+      to: "/dashboard/settings",
+    },
+    {
+      text: "Log out",
+      icon: (
+        <Logout
+          style={
+            selectedIndex === 10 ? { color: "#white" } : { color: "black" }
+          }
+        />
+      ),
+      to: "/dashboard/",
     },
   ];
 
@@ -120,7 +193,7 @@ const Drawer1 = (props) => {
   }
 
   const handleListItemClick = (to, index) => {
-    navigate(to);
+    history.push(to);
     setSelectedIndex(index);
     setMobileOpen(!mobileOpen);
   };
@@ -166,7 +239,7 @@ const Drawer1 = (props) => {
           <img src={logo} style={{ width: 100 }} alt="site logo" />
         </a>
       </div>
-      <Divider />
+
       <br />
       <div
         style={{
@@ -206,7 +279,7 @@ const Drawer1 = (props) => {
           })}
         </List>
       </div>
-
+      <br />
       <div
         style={{
           flexDirection: "column",
@@ -217,13 +290,36 @@ const Drawer1 = (props) => {
           padding: 16,
         }}
       >
-        <Button
-          startIcon={<PowerSettingsNewIcon />}
-          style={{ textTransform: "none" }}
-          onClick={signOut}
-        >
-          Sign Out
-        </Button>
+        <Divider />
+        <List className={classes.listRoot}>
+          {subDrawerItems.map((item, index) => {
+            const { text, icon, to } = item;
+            if (1 === 1) {
+              return (
+                <ListItem
+                  button
+                  key={index}
+                  selected={selectedIndex === index}
+                  onClick={() => handleListItemClick(to, index)}
+                >
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItem>
+              );
+            } else {
+              return (
+                <Skeleton
+                  key={index}
+                  component="li"
+                  variant="rect"
+                  animation="wave"
+                  height={30}
+                  style={{ margin: 10 }}
+                />
+              );
+            }
+          })}
+        </List>
       </div>
     </div>
   );

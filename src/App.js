@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./presentation/pages/login";
 import ForgotPassword from "./presentation/pages/password";
 import ProtectedRoute from "./presentation/components/protected_routes";
@@ -23,7 +23,6 @@ import {
 } from "./data/redux/slice/resources";
 import { setLGAsData } from "./data/redux/slice/lga";
 import Dashboard from "./presentation/pages/dashboard";
-import MiniDrawer from "./presentation/pages/dashboard/index2";
 
 function App() {
   const dispatch = useDispatch();
@@ -138,23 +137,33 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <Router>
         <div>
           <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route
-              path="/dashboard/*"
+          <Switch>
+            <Route path="/" exact>
+              <Login />
+            </Route>
+
+            <Route path="/forgot-password" exact>
+              <ForgotPassword />
+            </Route>
+
+            <ProtectedRoute path="/dashboard">
+              <Dashboard />
+            </ProtectedRoute>
+
+            {/* <Route
+              path="//*"
               element={
                 <ProtectedRoute>
-                  <MiniDrawer />
+                  < />
                 </ProtectedRoute>
               }
-            />
-          </Routes>
+            /> */}
+          </Switch>
         </div>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }

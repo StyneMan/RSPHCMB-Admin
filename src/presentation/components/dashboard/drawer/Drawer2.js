@@ -4,16 +4,12 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import DashBoardIcon from "@mui/icons-material/DashboardOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
-import { useNavigate } from "react-router-dom";
-import { makeStyles, useTheme } from "@mui/styles";
+import { useHistory } from "react-router-dom";
+import { makeStyles, useTheme, withStyles } from "@mui/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import logo from "../../../../assets/images/logo_white.svg";
 
 import { useSnackbar } from "notistack";
@@ -22,6 +18,17 @@ import Skeleton from "@mui/material/Skeleton";
 import { auth } from "../../../../data/firebase";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../../../../data/redux/slice/user";
+import {
+  AddCircleOutline,
+  ContactMail,
+  ContactSupportOutlined,
+  Help,
+  Home,
+  Interests,
+  Lan,
+  Logout,
+  Settings,
+} from "@mui/icons-material";
 
 // import pattern from "../../../../assets/images/pattern.png";
 
@@ -36,20 +43,38 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: "#0C0C77",
+    backgroundColor: "#18113C",
   },
   toolbar: theme.mixins.toolbar,
   listRoot: {
-    width: "100%",
+    width: "86%",
     padding: theme.spacing(1),
   },
 }));
 
+const ListItema = withStyles({
+  root: {
+    "&$selected": {
+      backgroundColor: "#FFFFFF",
+      color: "black",
+    },
+    "&$selected:hover": {
+      backgroundColor: "#221B44",
+      color: "white",
+    },
+    "&:hover": {
+      backgroundColor: "#9A88F2",
+      color: "#9A88F2",
+    },
+  },
+  selected: {},
+})(ListItem);
+
 const Drawer2 = (props) => {
   const classes = useStyles();
-  const navigate = useNavigate();
-  const { history } = props;
+  const history = useHistory();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedIndex2, setSelectedIndex2] = React.useState(0);
   // const { userStatus, userData } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -59,48 +84,106 @@ const Drawer2 = (props) => {
 
   const drawerItems = [
     {
-      text: "Dashboard",
+      text: "Overview",
       icon: (
         <DashBoardIcon
-          style={
-            selectedIndex === 0 ? { color: "white" } : { color: "#4C3992" }
-          }
+          style={selectedIndex === 0 ? { color: "black" } : { color: "white" }}
         />
       ),
-      to: "/admin/dashboard/",
+      to: "/dashboard/",
     },
     {
-      text: "Manage App",
+      text: "Home",
       icon: (
-        <SchoolOutlinedIcon
-          style={
-            selectedIndex === 1 ? { color: "white" } : { color: "#4C3992" }
-          }
+        <Home
+          style={selectedIndex === 1 ? { color: "black" } : { color: "white" }}
         />
       ),
-      to: "/admin/dashboard/manage-app",
+      to: "/dashboard/home",
     },
     {
-      text: "Manage Users",
+      text: "About",
+      icon: (
+        <Help
+          style={selectedIndex === 2 ? { color: "black" } : { color: "white" }}
+        />
+      ),
+      to: "/dashboard/about",
+    },
+    {
+      text: "Services",
+      icon: (
+        <Lan
+          style={selectedIndex === 3 ? { color: "black" } : { color: "white" }}
+        />
+      ),
+      to: "/dashboard/services",
+    },
+    {
+      text: "Resources",
+      icon: (
+        <Interests
+          style={selectedIndex === 4 ? { color: "black" } : { color: "white" }}
+        />
+      ),
+      to: "/dashboard/resources",
+    },
+    {
+      text: "Contact",
+      icon: (
+        <ContactMail
+          style={selectedIndex === 5 ? { color: "black" } : { color: "white" }}
+        />
+      ),
+      to: "/dashboard/contact",
+    },
+    // {
+    //   text: "Others",
+    //   icon: (
+    //     <AddCircleOutline
+    //       style={selectedIndex === 6 ? { color: "black" } : { color: "white" }}
+    //     />
+    //   ),
+    //   to: "/dashboard/others",
+    // },
+    {
+      text: "Users",
       icon: (
         <PeopleOutlinedIcon
-          style={
-            selectedIndex === 2 ? { color: "white" } : { color: "#4C3992" }
-          }
+          style={selectedIndex === 7 ? { color: "black" } : { color: "white" }}
         />
       ),
-      to: "/admin/dashboard/manage-users",
+      to: "/dashboard/users",
     },
     {
-      text: "Profile",
+      text: "Enquiries",
       icon: (
-        <PersonOutlineIcon
-          style={
-            selectedIndex === 3 ? { color: "white" } : { color: "#4C3992" }
-          }
+        <ContactSupportOutlined
+          style={selectedIndex === 8 ? { color: "black" } : { color: "white" }}
         />
       ),
-      to: "/admin/dashboard/profile",
+      to: "/dashboard/enquiries",
+    },
+  ];
+
+  const subDrawerItems = [
+    // {
+    //   text: "Settings",
+    //   icon: (
+    //     <Settings
+    //       style={selectedIndex2 === 0 ? { color: "white" } : { color: "black" }}
+    //     />
+    //   ),
+    //   to: "/dashboard/settings",
+    // },
+    {
+      text: "Log out",
+      icon: (
+        <Logout
+          style={selectedIndex2 === 0 ? { color: "white" } : { color: "red" }}
+        />
+      ),
+      to: "/dashboard/",
     },
   ];
 
@@ -109,6 +192,7 @@ const Drawer2 = (props) => {
   const xs = useMediaQuery(theme.breakpoints.only("xs"));
   const sm = useMediaQuery(theme.breakpoints.only("sm"));
   const md = useMediaQuery(theme.breakpoints.only("md"));
+
   if (xs) {
     cornerSize = 76;
     picSize = 70;
@@ -124,28 +208,32 @@ const Drawer2 = (props) => {
   }
 
   const handleListItemClick = (to, index) => {
-    navigate(to);
+    history.push(to);
     setSelectedIndex(index);
+  };
+
+  const handleListItemClick2 = (to, index) => {
+    history.push(to);
+    setSelectedIndex2(index);
   };
 
   const signOut = async () => {
     props.handleBackdrop(true);
-    // try {
-    //   await auth.signOut();
-    //   dispatch(setUserData(null));
-    //   props.handleBackdrop(false);
-    //   // enqueueSnackbar(`Successfully logged out`, { variant: "success" });
-    //   // history.replace({
-    //   //   pathname: "/login",
-    //   // });
-    // } catch (err) {
-    //   enqueueSnackbar(`${err?.message || "Check your internet connection."}`, {
-    //     variant: "error",
-    //   });
-    // }
-    // finally {
-    //   history.go(0);
-    // }
+    try {
+      await auth.signOut();
+      dispatch(setUserData(null));
+      props.handleBackdrop(false);
+      enqueueSnackbar(`Successfully logged out`, { variant: "success" });
+      history.replace({
+        pathname: "/",
+      });
+    } catch (err) {
+      enqueueSnackbar(`${err?.message || "Check your internet connection."}`, {
+        variant: "error",
+      });
+    } finally {
+      history.go(0);
+    }
   };
 
   const myDrawer = (
@@ -162,6 +250,7 @@ const Drawer2 = (props) => {
       }}
     >
       <br />
+      <Divider />
       <div
         className={classes.toolbar}
         style={{
@@ -171,9 +260,11 @@ const Drawer2 = (props) => {
           alignItems: "center",
         }}
       >
-        <a href="/">
-          <img src={logo} style={{ width: 100 }} alt="site logo" />
-        </a>
+        <img
+          src={logo}
+          style={{ width: "75%", margin: "auto" }}
+          alt="site logo"
+        />
       </div>
       <Divider />
       <br />
@@ -191,7 +282,7 @@ const Drawer2 = (props) => {
             const { text, icon, to } = item;
             if (4 > 2) {
               return (
-                <ListItem
+                <ListItema
                   button
                   key={index}
                   selected={selectedIndex === index}
@@ -199,7 +290,7 @@ const Drawer2 = (props) => {
                 >
                   <ListItemIcon>{icon}</ListItemIcon>
                   <ListItemText primary={text} />
-                </ListItem>
+                </ListItema>
               );
             } else {
               return (
@@ -224,19 +315,47 @@ const Drawer2 = (props) => {
           marginRight: "auto",
           justifyContent: "left",
           alignItems: "start",
+          width: "100%",
           padding: 16,
           zIndex: 1000,
         }}
       >
-        <Button
-          variant="text"
-          color="secondary"
-          startIcon={<PowerSettingsNewIcon />}
-          style={{ textTransform: "none", zIndex: 1000 }}
-          onClick={signOut}
-        >
-          Sign Out
-        </Button>
+        <List className={classes.listRoot}>
+          {subDrawerItems.map((item, index) => {
+            const { text, icon, to } = item;
+            if (2 > 1) {
+              return (
+                <ListItem
+                  sx={{ width: "96%" }}
+                  button
+                  key={index}
+                  selected={selectedIndex2 === index}
+                  onClick={() =>
+                    index !== 0 ? handleListItemClick2(to, index) : signOut()
+                  }
+                >
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText
+                    primary={text}
+                    color="white"
+                    sx={{ color: index === 0 ? "white" : "red" }}
+                  />
+                </ListItem>
+              );
+            } else {
+              return (
+                <Skeleton
+                  key={index}
+                  component="li"
+                  variant="rect"
+                  animation="wave"
+                  height={30}
+                  style={{ margin: 10 }}
+                />
+              );
+            }
+          })}
+        </List>
       </div>
     </div>
   );
