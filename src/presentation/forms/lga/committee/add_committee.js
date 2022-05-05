@@ -1,23 +1,23 @@
 import React from "react";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-import Avatar from "@mui/material/Avatar";
-import { makeStyles } from "@mui/styles";
+// import Avatar from "@mui/material/Avatar";
+// import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
-import { db, ref, setDoc, doc, updateDoc } from "../../../../data/firebase";
+import { db, doc, updateDoc } from "../../../../data/firebase";
 import { useSnackbar } from "notistack";
 import Backdrop from "@mui/material/Backdrop";
 import { CircularProgress } from "@mui/material";
 
-const useStyles = makeStyles((theme) => ({
-  image: {
-    margin: "0px auto 15px auto",
-    width: 128,
-    height: 128,
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   image: {
+//     margin: "0px auto 15px auto",
+//     width: 128,
+//     height: 128,
+//   },
+// }));
 
 const NewCommitteeForm = (props) => {
-  const classes = useStyles();
+  // const classes = useStyles();
   let { setOpen, id, list } = props;
   const [formValues, setFormValues] = React.useState({
     name: "",
@@ -35,7 +35,7 @@ const NewCommitteeForm = (props) => {
 
       setIsLoading(false);
     }
-  }, []);
+  }, [list, comms]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,11 +61,12 @@ const NewCommitteeForm = (props) => {
     try {
       await updateDoc(mRef, {
         committees: [...list],
-      });
-      setOpen(false);
-      setIsLoading(false);
-      enqueueSnackbar(`Committee added successfully`, {
-        variant: "success",
+      }).then(() => {
+        setOpen(false);
+        setIsLoading(false);
+        enqueueSnackbar(`Committee added successfully`, {
+          variant: "success",
+        });
       });
     } catch (error) {
       setIsLoading(false);

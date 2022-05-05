@@ -33,25 +33,28 @@ import { useSnackbar } from "notistack";
 import CustomDialog from "../../../../../components/dialogs/custom-dialog";
 import CustomDialog2 from "../../../../../components/dialogs/custom-dialog";
 import CustomDialog3 from "../../../../../components/dialogs/custom-dialog";
+import CustomDialog4 from "../../../../../components/dialogs/custom-dialog";
 import NewCommitteeForm from "../../../../../forms/lga/committee/add_committee";
+import NewFacilityForm from "../../../../../forms/lga/facilities/add_facility";
 
 const LGAItem = () => {
   const history = useHistory();
   const location = useLocation();
 
   const { LGAsData } = useSelector((state) => state.lgas);
-  const [lgaFacilities, setLGAFacilities] = React.useState();
+  // const [lgaFacilities, setLGAFacilities] = React.useState();
   const [lgaItem, setLGAItem] = React.useState();
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
+  const [open4, setOpen4] = React.useState(false);
 
   React.useEffect(() => {
     let faci = LGAsData?.filter((it) => it?.lga === location.state?.title);
-    setLGAFacilities(faci[0]?.facilities);
+    // setLGAFacilities(faci[0]?.facilities);
     setLGAItem(faci[0]);
     // console.log("Facility: ", faci);
-  }, [LGAsData]);
+  }, [LGAsData, location.state?.title]);
 
   return (
     <div>
@@ -88,6 +91,18 @@ const LGAItem = () => {
             setOpen={setOpen3}
             id={lgaItem?.id}
             list={lgaItem?.committees}
+          />
+        }
+      />
+      <CustomDialog4
+        title="Add New Facility Record"
+        open={open4}
+        handleClose={() => setOpen4(false)}
+        bodyComponent={
+          <NewFacilityForm
+            setOpen={setOpen4}
+            id={lgaItem?.id}
+            list={lgaItem?.facilities}
           />
         }
       />
@@ -177,7 +192,11 @@ const LGAItem = () => {
           alignItems="center"
         >
           <Typography gutterBottom>FACILITIES</Typography>
-          <Button variant="contained" startIcon={<Add />}>
+          <Button
+            variant="contained"
+            startIcon={<Add />}
+            onClick={() => setOpen4(true)}
+          >
             Add New
           </Button>
         </Box>
@@ -263,7 +282,7 @@ const UpdateImage = (props) => {
 
   const uploadNewImage = () => {
     setIsUploading(true);
-    const timeNow = new Date();
+    // const timeNow = new Date();
     //First upload image to firebase storage then save to firestore
     const storageRef = ref(storage, "lgas/" + id);
     const uploadTask = uploadBytesResumable(storageRef, file);
@@ -372,7 +391,6 @@ const UpdateTitle = (props) => {
   let { setOpen, title, id } = props;
   const [formValues, setFormValues] = React.useState({
     title: title,
-    image: "",
   });
   const [isLoading, setIsLoading] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -388,18 +406,16 @@ const UpdateTitle = (props) => {
       title: formValues.title ? formValues.title : title,
     });
 
-    //No image is changed. So update all text
-    const timeNow = new Date();
     try {
-      const mRef = doc(db, "home", "" + id);
+      const mRef = doc(db, "lgas", "" + id);
       await updateDoc(mRef, {
-        title: formValues.title,
-        updatedAt: timeNow,
-      });
-      setOpen(false);
-      setIsLoading(false);
-      enqueueSnackbar(`Updated successfully`, {
-        variant: "success",
+        bg_info: formValues.title,
+      }).then(() => {
+        setOpen(false);
+        setIsLoading(false);
+        enqueueSnackbar(`Updated successfully`, {
+          variant: "success",
+        });
       });
     } catch (error) {
       setIsLoading(false);
@@ -451,7 +467,7 @@ const UpdateTitle = (props) => {
           disabled={isLoading}
           fullWidth
         >
-          Update
+          Update Bg Info
         </Button>
       </ValidatorForm>
     </div>

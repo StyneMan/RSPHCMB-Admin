@@ -4,7 +4,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import DashBoardIcon from "@mui/icons-material/DashboardOutlined";
@@ -13,15 +13,15 @@ import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import { useHistory } from "react-router-dom";
 import { makeStyles, useTheme } from "@mui/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+// import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import logo from "../../../../assets/images/logo_white.svg";
 
-import { useSnackbar } from "notistack";
+// import { useSnackbar } from "notistack";
 import Skeleton from "@mui/material/Skeleton";
 
-import { auth } from "../../../../data/firebase";
-import { useDispatch } from "react-redux";
-import { setUserData } from "../../../../data/redux/slice/user";
+// import { auth } from "../../../../data/firebase";
+// import { useDispatch } from "react-redux";
+// import { setUserData, setMyData } from "../../../../data/redux/slice/user";
 import { Logout, Settings } from "@mui/icons-material";
 
 const drawerWidth = 270;
@@ -47,9 +47,9 @@ const Drawer1 = (props) => {
   const classes = useStyles();
   const { mobileOpen, setMobileOpen } = props;
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const history = useHistory();
-  const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
 
   const container =
     props.window !== undefined ? () => window().document.body : undefined;
@@ -130,9 +130,7 @@ const Drawer1 = (props) => {
       text: "Users",
       icon: (
         <PersonOutlineIcon
-          style={
-            selectedIndex === 3 ? { color: "#4C3992" } : { color: "black" }
-          }
+          style={selectedIndex === 3 ? { color: "black" } : { color: "white" }}
         />
       ),
       to: "/dashboard/users",
@@ -141,9 +139,7 @@ const Drawer1 = (props) => {
       text: "Enquiries",
       icon: (
         <PersonOutlineIcon
-          style={
-            selectedIndex === 3 ? { color: "#4C3992" } : { color: "black" }
-          }
+          style={selectedIndex === 3 ? { color: "black" } : { color: "white" }}
         />
       ),
       to: "/dashboard/enquiries",
@@ -152,10 +148,10 @@ const Drawer1 = (props) => {
 
   const subDrawerItems = [
     {
-      text: "Settings",
+      text: "Account",
       icon: (
         <Settings
-          style={selectedIndex === 9 ? { color: "#white" } : { color: "black" }}
+          style={selectedIndex === 9 ? { color: "white" } : { color: "black" }}
         />
       ),
       to: "/dashboard/settings",
@@ -164,9 +160,7 @@ const Drawer1 = (props) => {
       text: "Log out",
       icon: (
         <Logout
-          style={
-            selectedIndex === 10 ? { color: "#white" } : { color: "black" }
-          }
+          style={selectedIndex === 10 ? { color: "white" } : { color: "black" }}
         />
       ),
       to: "/dashboard/",
@@ -198,25 +192,25 @@ const Drawer1 = (props) => {
     setMobileOpen(!mobileOpen);
   };
 
-  const signOut = async () => {
-    props.handleBackdrop(true);
-    // try {
-    //   await auth.signOut();
-    //   dispatch(setUserData(null));
-    //   props.handleBackdrop(false);
-    //   enqueueSnackbar(`Successfully logged out`, { variant: "success" });
-    //   history.replace({
-    //     pathname: "/login",
-    //   });
-    // } catch (err) {
-    //   enqueueSnackbar(`${err?.message || "Check your internet connection."}`, {
-    //     variant: "error",
-    //   });
-    // }
-    // finally {
-    //   history.go(0);
-    // }
-  };
+  // const signOut = async () => {
+  //   props.handleBackdrop(true);
+  //   // try {
+  //   //   await auth.signOut();
+  //   //   dispatch(setUserData(null));
+  //   //   props.handleBackdrop(false);
+  //   //   enqueueSnackbar(`Successfully logged out`, { variant: "success" });
+  //   //   history.replace({
+  //   //     pathname: "/login",
+  //   //   });
+  //   // } catch (err) {
+  //   //   enqueueSnackbar(`${err?.message || "Check your internet connection."}`, {
+  //   //     variant: "error",
+  //   //   });
+  //   // }
+  //   // finally {
+  //   //   history.go(0);
+  //   // }
+  // };
 
   const myDrawer = (
     <div

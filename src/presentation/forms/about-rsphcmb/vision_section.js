@@ -21,6 +21,7 @@ import { Typography } from "@mui/material";
 import { Grid } from "@mui/material";
 import { useHistory, useLocation } from "react-router-dom";
 import { ArrowBackIosNew } from "@mui/icons-material";
+import RichText from "../../components/misc/richtext";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -71,13 +72,16 @@ const VisionSection = () => {
   const [formValues, setFormValues] = React.useState({
     vision: location?.state.vision,
     image: "",
-    mission: location?.state.mission,
+    // mission: location?.state.mission,
   });
   const [file, setFile] = React.useState(null);
   const [isUploading, setIsUploading] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
+  const [missionBody, setMissionBody] = React.useState(null);
   const [previewImage, setPreviewImage] = React.useState("");
+  const [isError, setIsError] = React.useState(false);
+  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -123,7 +127,7 @@ const VisionSection = () => {
           try {
             await updateDoc(mRef, {
               vision: formValues.vision,
-              mission: formValues.mission,
+              mission: missionBody,
               updatedAt: timeNow,
               visionImage: downloadURL,
             });
@@ -147,9 +151,7 @@ const VisionSection = () => {
     setIsLoading(true);
     setFormValues({
       vision: formValues.vision ? formValues.vision : location?.state.vision,
-      mission: formValues.mission
-        ? formValues.mission
-        : location?.state?.mission,
+      mission: missionBody,
     });
 
     if (!previewImage) {
@@ -159,7 +161,7 @@ const VisionSection = () => {
         const mRef = doc(db, "about", "rsphcmb");
         await updateDoc(mRef, {
           vision: formValues.vision,
-          mission: formValues.mission,
+          mission: missionBody,
           updatedAt: timeNow,
         });
         setIsLoading(false);
@@ -257,20 +259,13 @@ const VisionSection = () => {
         />
         <br />
         <br />
-        <TextField
-          id="outlined-multiline-static"
-          multiline
-          label="Mission statement"
-          placeholder="Type mission statement here..."
-          size="small"
-          variant="outlined"
-          value={formValues.mission}
-          onChange={handleChange}
-          name="mission"
-          rows={4}
-          fullWidth
-          required
-          className={classes.mb}
+
+        <RichText
+          value={missionBody}
+          setValue={setMissionBody}
+          error={isError}
+          setError={setIsError}
+          setIsStartedFilling={setIsStartedFilling}
         />
 
         <Button

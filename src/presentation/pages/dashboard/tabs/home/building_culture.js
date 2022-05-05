@@ -9,7 +9,6 @@ import {
   Grid,
   IconButton,
   Typography,
-  TextField,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
@@ -30,6 +29,8 @@ import {
   getDownloadURL,
 } from "../../../../../data/firebase";
 import { useSnackbar } from "notistack";
+import RichText from "../../../../components/misc/richtext";
+import MUIRichTextEditor from "mui-rte";
 
 const BuildingCulture = () => {
   const { buildingCulture } = useSelector((state) => state.homepage);
@@ -121,7 +122,12 @@ const BuildingCulture = () => {
                 </IconButton>
               </Box>
               <Divider />
-              <Typography>{buildingCulture?.summary}</Typography>
+              <MUIRichTextEditor
+                readOnly
+                inlineToolbar={false}
+                defaultValue={buildingCulture?.summary}
+                toolbar={false}
+              />
             </Box>
           </Grid>
         </Grid>
@@ -311,7 +317,7 @@ const UpdateImage = (props) => {
 
 const UpdateTitle = (props) => {
   const classes = useStyles();
-  let { setOpen, id, title } = props;
+  let { setOpen, title } = props;
   const [formValues, setFormValues] = React.useState({
     title: title,
     image: "",
@@ -398,32 +404,23 @@ const UpdateTitle = (props) => {
 };
 
 const UpdateSummary = (props) => {
-  const classes = useStyles();
+  // const classes = useStyles();
   let { setOpen, summary } = props;
-  const [formValues, setFormValues] = React.useState({
-    summary: summary,
-    image: "",
-  });
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
+  const [setIsStartedFilling] = React.useState(false);
+  const [body, setBody] = React.useState(summary);
   const { enqueueSnackbar } = useSnackbar();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues((prevData) => ({ ...prevData, [name]: value }));
-  };
 
   const updateSummary = async (e) => {
     setIsLoading(true);
-    setFormValues({
-      summary: formValues.summary ? formValues.summary : summary,
-    });
 
     //No image is changed. So update all text
     const timeNow = new Date();
     try {
       const mRef = doc(db, "home", "building-culture");
       await updateDoc(mRef, {
-        summary: formValues.summary,
+        summary: body,
         updatedAt: timeNow,
       });
       setOpen(false);
@@ -453,21 +450,14 @@ const UpdateSummary = (props) => {
         )}
       </Backdrop>
       <ValidatorForm onSubmit={updateSummary}>
-        <TextField
-          id="outlined-multiline-static"
-          multiline
-          label="Summary"
-          placeholder="Type summary here..."
-          size="small"
-          variant="outlined"
-          value={formValues.summary}
-          onChange={handleChange}
-          name="summary"
-          rows={5}
-          fullWidth
-          required
-          className={classes.mb}
+        <RichText
+          value={body}
+          setValue={setBody}
+          error={isError}
+          setError={setIsError}
+          setIsStartedFilling={setIsStartedFilling}
         />
+
         <br />
 
         <Button

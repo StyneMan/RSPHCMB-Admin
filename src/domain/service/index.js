@@ -2,10 +2,11 @@ import { auth } from "../../data/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import {
-  setPersistence,
-  browserSessionPersistence,
+  // setPersistence,
+  // browserSessionPersistence,
   setDoc,
   doc,
   db,
@@ -18,6 +19,14 @@ export const createUser = async (email, pass) => {
 export const signInUser = async (email, pass) => {
   try {
     return await signInWithEmailAndPassword(auth, email, pass);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const resetPassword = async (email) => {
+  try {
+    return await sendPasswordResetEmail(auth, email);
   } catch (error) {
     console.log(error);
   }

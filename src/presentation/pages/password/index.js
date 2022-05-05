@@ -1,6 +1,7 @@
-import { Box, Button, Card, TextField, Typography } from "@mui/material";
+import { Box, Card } from "@mui/material";
 import React from "react";
 import image from "../../../assets/images/wave_bg.svg";
+import PasswordForm from "../../forms/password";
 
 const ForgotPassword = () => {
   return (
@@ -29,28 +30,21 @@ const ForgotPassword = () => {
       >
         <Card style={{ margin: "auto", width: "26vw" }}>
           <Box
-            paddingY={10}
-            paddingX={5}
+            paddingY={8}
+            paddingX={4}
             display="flex"
             flexDirection="column"
             justifyContent={"start"}
           >
-            <Typography
-              gutterBottom
-              fontSize={20}
-              fontWeight="600"
-              textAlign={"center"}
-            >
-              Forgot Password?
-            </Typography>
-            <Typography
+            <PasswordForm />
+            {/* <Typography
               gutterBottom
               fontSize={11}
               fontWeight="400"
-              paddingBottom={4}
+              paddingBottom={4} 
               textAlign={"center"}
             >
-              Enter your email to reset your password.
+              
             </Typography>
             <TextField variant="outlined" placeholder="Email" />
             <br />
@@ -63,7 +57,7 @@ const ForgotPassword = () => {
               alignItems={"center"}
             >
               <Button variant="contained">Send Password Reset</Button>
-            </Box>
+            </Box> */}
           </Box>
         </Card>
       </div>

@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  ValidatorForm,
-  TextValidator,
-  SelectValidator,
-} from "react-material-ui-form-validator";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import Avatar from "@mui/material/Avatar";
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
@@ -14,9 +10,6 @@ import {
   doc,
   uploadBytesResumable,
   getDownloadURL,
-  query,
-  collection,
-  onSnapshot,
   deleteObject,
   updateDoc,
 } from "../../../data/firebase";
@@ -72,7 +65,7 @@ const CircularProgressWithLabel = (props) => {
 
 const EditServiceForm = (props) => {
   const classes = useStyles();
-  let { setOpen, id, title, img, body, summary } = props;
+  let { setOpen, id, title, img, body, summary, type } = props;
   const [formValues, setFormValues] = React.useState({
     title: title,
     image: "",
@@ -109,7 +102,12 @@ const EditServiceForm = (props) => {
     setIsUploading(true);
     const timeNow = new Date();
     //First upload image to firebase storage then save to firestore
-    const storageRef = ref(storage, "services/" + timeNow.getTime());
+    const storageRef = ref(
+      storage,
+      type === "featured"
+        ? "services-featured/"
+        : "services/" + timeNow.getTime()
+    );
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
@@ -128,7 +126,11 @@ const EditServiceForm = (props) => {
         setIsUploading(false);
         setIsLoading(true);
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-          const mRef = doc(db, "services", "" + id);
+          const mRef = doc(
+            db,
+            type === "featured" ? "featured" : "services",
+            type === "featured" ? "service" : "" + id
+          );
           try {
             await updateDoc(mRef, {
               title: formValues.title,
@@ -144,9 +146,12 @@ const EditServiceForm = (props) => {
             });
           } catch (error) {
             setIsLoading(false);
-            enqueueSnackbar(`${error?.message}`, {
-              variant: "error",
-            });
+            enqueueSnackbar(
+              `${error?.message || "Check your internet connection"}`,
+              {
+                variant: "error",
+              }
+            );
           }
         });
       }
@@ -165,7 +170,11 @@ const EditServiceForm = (props) => {
       //No image is changed. So update all text
       const timeNow = new Date();
       try {
-        const mRef = doc(db, "services", "" + id);
+        const mRef = doc(
+          db,
+          type === "featured" ? "featured" : "services",
+          type === "featured" ? "service" : "" + id
+        );
         await updateDoc(mRef, {
           title: formValues.title,
           body: serviceBody,
@@ -185,7 +194,10 @@ const EditServiceForm = (props) => {
       }
     } else {
       //Change on the featured image and all texts
-      const fileRef = ref(storage, "services/" + id);
+      const fileRef = ref(
+        storage,
+        type === "featured" ? "services-featured/" : "services/" + id
+      );
 
       deleteObject(fileRef)
         .then(() => {

@@ -11,17 +11,17 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { RefreshOutlined } from "@mui/icons-material";
 
 import { useDispatch } from "react-redux";
-import { setUserData } from "../../data/redux/slice/user";
+import { setMyData, setUserData } from "../../data/redux/slice/user";
 import {
   db,
   doc,
-  // getDoc,
   setPersistence,
   browserSessionPersistence,
   auth,
   onSnapshot,
 } from "../../data/firebase";
 import { signInUser } from "../../domain/service";
+import image from "../../assets/images/logo.svg";
 
 const LoginForm = () => {
   const history = useHistory();
@@ -46,8 +46,11 @@ const LoginForm = () => {
         signInUser(formValues.email, formValues.password)
           .then(async (resp) => {
             //Now get user data
-            onSnapshot(doc(db, "users", resp.user.uid), (doc) => {
-              console.log("Current data: ", doc.data());
+            onSnapshot(doc(db, "users", "" + resp?.user?.uid), (doc) => {
+              // console.log("Current data: ", doc.data());
+              // console.log("Current User ID: ", resp?.user?.uid);
+              // dispatch(setUserID(resp?.user?.uid));
+              dispatch(setMyData(doc.data()));
               dispatch(setUserData(doc.data()));
               history.push("/dashboard");
             });
@@ -65,12 +68,22 @@ const LoginForm = () => {
   return (
     <div>
       <Box
-        paddingY={10}
-        paddingX={5}
+        paddingTop={5}
+        paddingBottom={8}
+        paddingX={4}
         display="flex"
         flexDirection="column"
         justifyContent={"start"}
       >
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent={"center"}
+          alignItems="center"
+          pb={1}
+        >
+          <img src={image} alt="" width={"60%"} />
+        </Box>
         <Typography
           gutterBottom
           fontSize={18}
@@ -90,13 +103,13 @@ const LoginForm = () => {
             value={formValues.email}
             onChange={handleChange}
             autoComplete="email"
+            label="Email"
             placeholder="Email"
             variant="outlined"
             validators={["required"]}
             errorMessages={["Email address is required"]}
           />
-          <br />
-          <br />
+
           <TextValidator
             margin="normal"
             required
@@ -146,6 +159,7 @@ const LoginForm = () => {
             </Button>
             <Button
               disabled={isLoading}
+              disableElevation={true}
               sx={{ textTransform: "none" }}
               endIcon={
                 isLoading && (

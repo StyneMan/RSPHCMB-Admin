@@ -30,12 +30,13 @@ import { useSnackbar } from "notistack";
 import NewServiceForm from "../../../../forms/services/new_service_form";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
 import { useHistory } from "react-router-dom";
+import MUIRichTextEditor from "mui-rte";
 import EditServiceForm from "../../../../forms/services/edit_service_form";
 import FeaturedServiceForm from "../../../../forms/services/set_featured_service";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: 300,
+    height: 320,
     width: "100%",
   },
   row: {
@@ -90,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ServiceItemCard = (props) => {
-  const { item } = props;
+  const { item, type } = props;
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -99,13 +100,22 @@ const ServiceItemCard = (props) => {
 
   const deleteService = () => {
     setOpenDelete(false);
-    const fileRef = ref(storage, "services/" + item?.id);
+    const fileRef = ref(
+      storage,
+      type === "featured" ? "services-featured/" : "services/" + item?.id
+    );
 
     deleteObject(fileRef)
       .then(async () => {
         // Images deleted now delete from firestore,
         try {
-          await deleteDoc(doc(db, "services", "" + item?.id));
+          await deleteDoc(
+            doc(
+              db,
+              type === "featured" ? "services-featured" : "services",
+              "" + item?.id
+            )
+          );
           enqueueSnackbar(`Item deleted successfully`, {
             variant: "success",
           });
@@ -161,6 +171,7 @@ const ServiceItemCard = (props) => {
             id={item?.id}
             body={item?.body}
             summary={item?.summary}
+            type={type}
           />
         }
       />
@@ -211,7 +222,7 @@ const ServiceItemCard = (props) => {
         >
           <CardMedia image={item?.image} className={classes.cardMedia} />
           <Divider />
-          <div className={classes.row}>
+          {/* <div className={classes.row}>
             <Typography
               fontSize={16}
               color="black"
@@ -223,18 +234,30 @@ const ServiceItemCard = (props) => {
                 ? item?.title?.substring(0, 75) + "..."
                 : item?.title}
             </Typography>
-          </div>
-          <Typography
-            justifyContent="stretch"
-            textAlign="left"
-            gutterBottom
-            fontSize={12}
-            color="black"
-            paddingLeft={1}
-            paddingBottom={1}
-          >
-            {item?.summary}
-          </Typography>
+          </div> */}
+          {type === "featured" ? (
+            <Box paddingX={2}>
+              <MUIRichTextEditor
+                readOnly
+                inlineToolbar={false}
+                style={{ width: "100%", textAlign: "center" }}
+                defaultValue={item?.body}
+                toolbar={false}
+              />
+            </Box>
+          ) : (
+            <Typography
+              justifyContent="stretch"
+              textAlign="left"
+              gutterBottom
+              fontSize={12}
+              color="black"
+              paddingLeft={1}
+              paddingBottom={1}
+            >
+              {item?.summary}
+            </Typography>
+          )}
         </CardActionArea>
       </Card>
     </>
@@ -318,7 +341,7 @@ const Services = () => {
           <Typography variant="h6" gutterBottom>
             Featured Service
           </Typography>
-          <ServiceItemCard item={featured} />
+          <ServiceItemCard item={featured} type={"featured"} />
         </div>
         <br />
         <br />
@@ -333,7 +356,7 @@ const Services = () => {
           >
             {serviceList?.map((item, index) => (
               <Grid item xs={12} sm={6} md={6} key={index}>
-                <ServiceItemCard item={item} />
+                <ServiceItemCard item={item} type="service" />
               </Grid>
             ))}
           </Grid>

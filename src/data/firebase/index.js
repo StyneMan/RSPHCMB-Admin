@@ -4,6 +4,8 @@ import {
   getAuth,
   setPersistence,
   browserSessionPersistence,
+  updatePassword,
+  updateEmail,
 } from "firebase/auth";
 import {
   addDoc,
@@ -68,8 +70,10 @@ export {
   uploadBytes,
   deleteObject,
   arrayUnion,
+  updateEmail,
   setPersistence,
   getDownloadURL,
+  updatePassword,
   uploadBytesResumable,
   browserSessionPersistence,
 };

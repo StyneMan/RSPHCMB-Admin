@@ -74,6 +74,16 @@ const About = () => {
       to: "/dashboard/about/rsphcmb",
     },
     {
+      title: "Board of Trustees",
+      desc: "Manage Board of Trustees",
+      to: "/dashboard/about/bot",
+    },
+    {
+      title: "Departments",
+      desc: "Manage Departments",
+      to: "/dashboard/about/departments",
+    },
+    {
       title: "Local Government Areas",
       desc: "Manage Rivers State LGAs data",
       to: "/dashboard/about/lga",

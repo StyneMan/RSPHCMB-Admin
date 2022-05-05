@@ -6,7 +6,7 @@ import ProtectedRoute from "./presentation/components/protected_routes";
 
 import { useDispatch } from "react-redux";
 import { query, db, collection, onSnapshot, doc, auth } from "./data/firebase/";
-import { setUserData } from "./data/redux/slice/user";
+import { setUserID } from "./data/redux/slice/user";
 
 import ScrollToTop from "./util/scroll";
 
@@ -26,7 +26,7 @@ import Dashboard from "./presentation/pages/dashboard";
 
 function App() {
   const dispatch = useDispatch();
-  const [user, setUser] = React.useState(null);
+  // const [user, setUser] = React.useState(null);
 
   React.useEffect(() => {
     try {
@@ -34,9 +34,10 @@ function App() {
       if (user) {
         onSnapshot(doc(db, "users", "" + user.uid), (doc) => {
           // userData(doc.data());
-          dispatch(setUserData(doc.data()));
-          console.log(doc.data());
-          setUser(doc.data());
+          //dispatch(setMyData(doc.data()));
+          dispatch(setUserID(user?.uid));
+          // console.log("ARGTE::", doc.data());
+          // setUser(doc.data());
         });
       }
 
@@ -56,14 +57,14 @@ function App() {
   }, []);
 
   React.useEffect(() => {
-    const q = query(collection(db, "faqs"));
-    onSnapshot(q, (querySnapshot) => {
-      const faqs = [];
-      querySnapshot.forEach((doc) => {
-        faqs.push(doc.data());
-      });
-      dispatch(setFAQs(faqs));
-    });
+    // const q = query(collection(db, "faqs"));
+    // onSnapshot(q, (querySnapshot) => {
+    //   const faqs = [];
+    //   querySnapshot.forEach((doc) => {
+    //     faqs.push(doc.data());
+    //   });
+    //   dispatch(setFAQs(faqs));
+    // });
 
     const teamQuery = query(collection(db, "team-members"));
     onSnapshot(teamQuery, (querySnapshot) => {

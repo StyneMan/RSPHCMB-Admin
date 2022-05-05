@@ -132,7 +132,7 @@ const HealthAccess = () => {
         <Grid container spacing={2}>
           <Grid item sm={6} md={5}>
             <Box display="flex" flexDirection="column">
-              <img src={healthAccess?.image} alt="" />
+              <img src={healthAccess?.image} alt="" width="100%" />
               <Button
                 sx={{ mt: 1, textTransform: "none" }}
                 variant="contained"
@@ -259,20 +259,7 @@ const UpdateImage = (props) => {
   };
 
   const updateImage = async (e) => {
-    setIsLoading(true);
-
-    //Change on the featured image and all texts
-    const fileRef = ref(storage, "health-access/im1");
-
-    deleteObject(fileRef)
-      .then(() => {
-        setIsLoading(false);
-        uploadNewImage();
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        // console.log("ErR: ", error);
-      });
+    uploadNewImage();
   };
 
   return (
@@ -334,7 +321,7 @@ const UpdateImage = (props) => {
 
 const UpdateTitle = (props) => {
   const classes = useStyles();
-  let { setOpen, id, title } = props;
+  let { setOpen, title } = props;
   const [formValues, setFormValues] = React.useState({
     title: title,
     image: "",
@@ -344,7 +331,7 @@ const UpdateTitle = (props) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e) => {
-    const { id, name, value } = e.target;
+    const { name, value } = e.target;
     setFormValues((prevData) => ({ ...prevData, [name]: value }));
   };
 
@@ -423,8 +410,7 @@ const UpdateTitle = (props) => {
 };
 
 const UpdateDescription = (props) => {
-  const classes = useStyles();
-  let { setOpen, id, description } = props;
+  let { setOpen, description } = props;
   const [formValues, setFormValues] = React.useState({
     description: description,
     image: "",
@@ -434,7 +420,7 @@ const UpdateDescription = (props) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e) => {
-    const { id, name, value } = e.target;
+    const { name, value } = e.target;
     setFormValues((prevData) => ({ ...prevData, [name]: value }));
   };
 
@@ -491,6 +477,7 @@ const UpdateDescription = (props) => {
           required
           onChange={handleChange}
           value={formValues.description}
+          sx={{ marginY: 2 }}
         />
         <br />
         <Button

@@ -288,7 +288,12 @@ const RSPHCMB = () => {
               <Typography gutterBottom>{data?.vision}</Typography>
               <br />
               <Typography gutterBottom>MISSION STATEMENT</Typography>
-              <Typography gutterBottom>{data?.mission}</Typography>
+              <MUIRichTextEditor
+                readOnly
+                inlineToolbar={false}
+                defaultValue={data?.mission}
+                toolbar={false}
+              />
             </Box>
           </Grid>
 

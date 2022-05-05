@@ -38,12 +38,12 @@ export default function UsersTable(props) {
         <TableHead>
           <TableRow>
             <StyledTableCell>S/N0</StyledTableCell>
-            <StyledTableCell align="right">FIRST NAME</StyledTableCell>
-            <StyledTableCell align="right">LAST NAME</StyledTableCell>
-            <StyledTableCell align="right">EMAIL ADDRESS</StyledTableCell>
-            <StyledTableCell align="right">PHONE NUMBER</StyledTableCell>
-            <StyledTableCell align="right">ROLE</StyledTableCell>
-            <StyledTableCell align="right">ACTIONS</StyledTableCell>
+            <StyledTableCell align="left">FIRST NAME</StyledTableCell>
+            <StyledTableCell align="left">LAST NAME</StyledTableCell>
+            <StyledTableCell align="left">EMAIL ADDRESS</StyledTableCell>
+            <StyledTableCell align="left">PHONE NUMBER</StyledTableCell>
+            <StyledTableCell align="left">ROLE</StyledTableCell>
+            <StyledTableCell align="left">ACTIONS</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

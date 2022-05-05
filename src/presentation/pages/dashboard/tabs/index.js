@@ -7,12 +7,12 @@ import AppWebsiteVisits from "./components/sections/app_website_visits";
 import AppCurrentVisits from "./components/sections/app_current_visits";
 
 const Overview = () => {
-  const { userData } = useSelector((state) => state.user);
+  const { myData } = useSelector((state) => state.user);
 
   return (
     <div style={{ height: "75vh" }}>
       <Typography variant="h6" gutterBottom>
-        Hi, {userData?.firstname}
+        Hi, {myData?.firstname}
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6} md={3}>

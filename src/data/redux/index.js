@@ -12,6 +12,7 @@ import rsphcmbReducer from "./slice/rsphcmb";
 import contactReducer from "./slice/contact";
 import serviceReducer from "./slice/services";
 import enquiriesReducer from "./slice/enquiry";
+import departmentReducer from "./slice/depts";
 
 export default configureStore({
   reducer: {
@@ -28,6 +29,7 @@ export default configureStore({
     contact: contactReducer,
     service: serviceReducer,
     enquiries: enquiriesReducer,
+    departments: departmentReducer,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({

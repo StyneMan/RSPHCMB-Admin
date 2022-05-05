@@ -20,6 +20,7 @@ import EditServiceForm from "../../../../forms/services/edit_service_form";
 import CreateAdminForm from "../../../../forms/users/add_user";
 import { useSelector } from "react-redux";
 import UsersTable from "../../../../components/misc/table/users_table";
+import UsersTablePaginated from "../../../../components/misc/table/users_table_paginated";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,152 +78,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserCard = (props) => {
-  const { item } = props;
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [openDelete, setOpenDelete] = React.useState(false);
-  const { enqueueSnackbar } = useSnackbar();
-  const history = useHistory();
-
-  const deleteService = async () => {
-    setOpenDelete(false);
-
-    try {
-      await deleteDoc(doc(db, "users", "" + item?.id));
-      enqueueSnackbar(`User deleted successfully`, {
-        variant: "success",
-      });
-    } catch (error) {
-      console.log("ERR: Del: ", error);
-      enqueueSnackbar(`User not deleted. Try again`, {
-        variant: "error",
-      });
-    }
-  };
-
-  const deleteBody = (
-    <div>
-      <Typography variant="body2" gutterBottom>
-        {`Are you sure you want to delete ${item?.firstname} ${item?.lastname}?`}
-      </Typography>
-      <br />
-      <div className={classes.subRow}>
-        <Button
-          size="small"
-          variant="contained"
-          style={{ marginRight: 4 }}
-          onClick={() => setOpenDelete(false)}
-        >
-          Cancel
-        </Button>
-
-        <Button
-          size="small"
-          variant="contained"
-          color="error"
-          onClick={deleteService}
-        >
-          Delete
-        </Button>
-      </div>
-    </div>
-  );
-
-  return (
-    <>
-      <CustomDialog
-        open={open}
-        title="Update User Information"
-        handleClose={() => setOpen(false)}
-        bodyComponent={
-          <EditServiceForm
-            setOpen={setOpen}
-            img={item?.image}
-            title={item?.title}
-            id={item?.id}
-            body={item?.body}
-            summary={item?.summary}
-          />
-        }
-      />
-      <DeleteDialog
-        open={openDelete}
-        title="Delete Service"
-        handleClose={() => setOpenDelete(false)}
-        bodyComponent={deleteBody}
-      />
-      <Card elevation={3} className={classes.root}>
-        <div className={classes.rowHeader}>
-          <div className={classes.lhsRow}>
-            <Typography variant="body2" fontSize={14}>
-              {item?.title}
-            </Typography>
-          </div>
-          <div className={classes.subRow}>
-            <IconButton
-              aria-label="delete"
-              color="primary"
-              onClick={() => setOpen(true)}
-            >
-              <Edit />
-            </IconButton>
-            <IconButton
-              aria-label="delete"
-              color="error"
-              onClick={() => setOpenDelete(true)}
-            >
-              <Delete />
-            </IconButton>
-          </div>
-        </div>
-        <CardActionArea
-          onClick={() =>
-            history.push({
-              pathname: "/dashboard/service/" + item?.id,
-              state: {
-                title: item?.title,
-                image: item?.image,
-                body: item?.body,
-                summary: item?.summary,
-                date: item?.createdAt,
-                id: item?.id,
-              },
-            })
-          }
-        >
-          <CardMedia image={item?.image} className={classes.cardMedia} />
-          <Divider />
-          <div className={classes.row}>
-            <Typography
-              fontSize={16}
-              color="black"
-              paddingLeft={1}
-              textAlign="start"
-              fontWeight="bold"
-            >
-              {item?.title?.length > 75
-                ? item?.title?.substring(0, 75) + "..."
-                : item?.title}
-            </Typography>
-          </div>
-          <Typography
-            justifyContent="stretch"
-            textAlign="left"
-            gutterBottom
-            fontSize={12}
-            color="black"
-            paddingLeft={1}
-            paddingBottom={1}
-          >
-            {item?.summary}
-          </Typography>
-        </CardActionArea>
-      </Card>
-    </>
-  );
-};
-
 const User = () => {
   const classes = useStyles();
   const history = useHistory();
@@ -262,7 +117,7 @@ const User = () => {
       </div>
       <br />
       <div>
-        <UsersTable list={userData} />
+        <UsersTablePaginated list={userData} />
       </div>
 
       {/* <div>

@@ -17,9 +17,8 @@ import Skeleton from "@mui/material/Skeleton";
 
 import { auth } from "../../../../data/firebase";
 import { useDispatch } from "react-redux";
-import { setUserData } from "../../../../data/redux/slice/user";
+import { setMyData } from "../../../../data/redux/slice/user";
 import {
-  AddCircleOutline,
   ContactMail,
   ContactSupportOutlined,
   Help,
@@ -27,7 +26,7 @@ import {
   Interests,
   Lan,
   Logout,
-  Settings,
+  Person,
 } from "@mui/icons-material";
 
 // import pattern from "../../../../assets/images/pattern.png";
@@ -60,11 +59,11 @@ const ListItema = withStyles({
     },
     "&$selected:hover": {
       backgroundColor: "#221B44",
-      color: "white",
+      color: "black",
     },
     "&:hover": {
-      backgroundColor: "#9A88F2",
-      color: "#9A88F2",
+      backgroundColor: "#00B0EF",
+      color: "white",
     },
   },
   selected: {},
@@ -150,7 +149,7 @@ const Drawer2 = (props) => {
       text: "Users",
       icon: (
         <PeopleOutlinedIcon
-          style={selectedIndex === 7 ? { color: "black" } : { color: "white" }}
+          style={selectedIndex === 6 ? { color: "black" } : { color: "white" }}
         />
       ),
       to: "/dashboard/users",
@@ -159,7 +158,7 @@ const Drawer2 = (props) => {
       text: "Enquiries",
       icon: (
         <ContactSupportOutlined
-          style={selectedIndex === 8 ? { color: "black" } : { color: "white" }}
+          style={selectedIndex === 7 ? { color: "black" } : { color: "white" }}
         />
       ),
       to: "/dashboard/enquiries",
@@ -167,20 +166,20 @@ const Drawer2 = (props) => {
   ];
 
   const subDrawerItems = [
-    // {
-    //   text: "Settings",
-    //   icon: (
-    //     <Settings
-    //       style={selectedIndex2 === 0 ? { color: "white" } : { color: "black" }}
-    //     />
-    //   ),
-    //   to: "/dashboard/settings",
-    // },
+    {
+      text: "Account",
+      icon: (
+        <Person
+          style={selectedIndex2 === 0 ? { color: "white" } : { color: "black" }}
+        />
+      ),
+      to: "/dashboard/account",
+    },
     {
       text: "Log out",
       icon: (
         <Logout
-          style={selectedIndex2 === 0 ? { color: "white" } : { color: "red" }}
+          style={selectedIndex2 === 1 ? { color: "white" } : { color: "red" }}
         />
       ),
       to: "/dashboard/",
@@ -221,7 +220,7 @@ const Drawer2 = (props) => {
     props.handleBackdrop(true);
     try {
       await auth.signOut();
-      dispatch(setUserData(null));
+      dispatch(setMyData(null));
       props.handleBackdrop(false);
       enqueueSnackbar(`Successfully logged out`, { variant: "success" });
       history.replace({
@@ -331,7 +330,7 @@ const Drawer2 = (props) => {
                   key={index}
                   selected={selectedIndex2 === index}
                   onClick={() =>
-                    index !== 0 ? handleListItemClick2(to, index) : signOut()
+                    index === 0 ? handleListItemClick2(to, index) : signOut()
                   }
                 >
                   <ListItemIcon>{icon}</ListItemIcon>

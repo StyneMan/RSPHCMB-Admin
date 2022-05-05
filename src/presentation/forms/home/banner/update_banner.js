@@ -171,17 +171,7 @@ const UpdateBannerForm = (props) => {
       }
     } else {
       //Change on the featured image and all texts
-      const fileRef = ref(storage, "home-banner/" + id);
-
-      deleteObject(fileRef)
-        .then(() => {
-          setIsLoading(false);
-          uploadNewImage();
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          console.log("ErR: ", error);
-        });
+      uploadNewImage();
     }
   };
 

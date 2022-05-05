@@ -32,9 +32,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function FacilitiesTable(props) {
   let { list } = props;
 
-  React.useEffect(() => {
-    console.log("HJ", list);
-  });
+  // React.useEffect(() => {
+  //   console.log("HJ", list);
+  // });
 
   return (
     <TableContainer component={Paper}>

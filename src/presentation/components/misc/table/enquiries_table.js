@@ -9,6 +9,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import ActionButton from "../../button/action_button";
 import TimeAgo from "../countdown/timeago";
+import ActionButton3 from "../../button/action_button3";
+import ActionButton4 from "../../button/action_button4";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -69,7 +71,7 @@ export default function EnquiriesTable(props) {
                   : row?.request}
               </StyledTableCell>
               <StyledTableCell align="right">
-                <ActionButton selected={row} index={index} />
+                <ActionButton4 selected={row} index={index} />
               </StyledTableCell>
             </StyledTableRow>
           ))}

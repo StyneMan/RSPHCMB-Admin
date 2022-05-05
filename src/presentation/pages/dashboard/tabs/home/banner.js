@@ -1,5 +1,5 @@
 import { Add } from "@mui/icons-material";
-import { Container, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import React from "react";
 
 import { makeStyles } from "@mui/styles";
@@ -19,16 +19,11 @@ import {
   collection,
   db,
   doc,
-  ref,
-  deleteObject,
-  storage,
   deleteDoc,
 } from "../../../../../data/firebase";
 import { useSnackbar } from "notistack";
 import NewBannerForm from "../../../../forms/home/banner/add_banner";
-import Avatar from "@mui/material/Avatar";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
-import { useHistory } from "react-router-dom";
 import UpdateBannerForm from "../../../../forms/home/banner/update_banner";
 
 const useStyles = makeStyles((theme) => ({
@@ -93,28 +88,19 @@ const ItemCard = (props) => {
   const [open, setOpen] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const history = useHistory();
 
-  const deleteService = () => {
-    setOpenDelete(false);
-    const fileRef = ref(storage, "home-banner/" + item?.id);
-
-    deleteObject(fileRef)
-      .then(async () => {
-        // Images deleted now delete from firestore,
-        try {
-          await deleteDoc(doc(db, "home-banner", "" + item?.id));
-          enqueueSnackbar(`Item deleted successfully`, {
-            variant: "success",
-          });
-        } catch (error) {
-          console.log("ERR: Del: ", error);
-          enqueueSnackbar(`Item not deleted. Try again`, {
-            variant: "error",
-          });
-        }
-      })
-      .catch((err) => {});
+  const deleteBanner = async () => {
+    try {
+      await deleteDoc(doc(db, "home-banner", "" + item?.id));
+      enqueueSnackbar(`Item deleted successfully`, {
+        variant: "success",
+      });
+    } catch (error) {
+      console.log("ERR: Del: ", error);
+      enqueueSnackbar(`Item not deleted. Try again`, {
+        variant: "error",
+      });
+    }
   };
 
   const deleteBody = (
@@ -137,7 +123,7 @@ const ItemCard = (props) => {
           size="small"
           variant="contained"
           color="error"
-          onClick={deleteService}
+          onClick={deleteBanner}
         >
           Delete
         </Button>
@@ -226,13 +212,12 @@ const ItemCard = (props) => {
 
 const Banner = () => {
   const classes = useStyles();
-  const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const [bannerList, setBannerList] = React.useState(null);
 
   React.useEffect(() => {
     const q = query(collection(db, "home-banner"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    onSnapshot(q, (querySnapshot) => {
       const banner = [];
       querySnapshot.forEach((doc) => {
         let dat = doc.data();

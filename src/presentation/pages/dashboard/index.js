@@ -33,6 +33,7 @@ import { setPermSecData } from "../../../data/redux/slice/perm_sec";
 import { setTeamData } from "../../../data/redux/slice/team";
 import { setContact } from "../../../data/redux/slice/contact";
 import { setUserData } from "../../../data/redux/slice/user";
+import { setDepartmentsData } from "../../../data/redux/slice/depts";
 import {
   setFeaturedService,
   setSevicesData,
@@ -70,6 +71,15 @@ import Reports from "./tabs/resources/reports";
 import GovernorSection from "../../forms/about-rsphcmb/governor_section";
 import User from "./tabs/users";
 import Enquiries from "./tabs/enquiries";
+import Gallery from "./tabs/resources/gallery";
+import Research from "./tabs/resources/research";
+import Departments from "./tabs/about/components/departments";
+import DepartmentInfo from "./tabs/about/components/department_info";
+import GalleryInfo from "./tabs/resources/gallery_info";
+import Account from "./tabs/account";
+import { useSelector } from "react-redux";
+import { Avatar } from "@mui/material";
+import { Box } from "@mui/system";
 
 const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
@@ -142,7 +152,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Dashboard() {
-  // const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -151,6 +160,8 @@ function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [openSignoutBackDrop, setOpenSignoutBackDrop] = React.useState(false);
+
+  const { myData } = useSelector((state) => state.user);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -179,6 +190,34 @@ function Dashboard() {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  // React.useEffect(() => {
+  //   try {
+  //     const user = auth.currentUser;
+  //     if (user) {
+  //       onSnapshot(doc(db, "users", "" + user.uid), (doc) => {
+  //         // userData(doc.data());
+  //         // dispatch(setMyData(doc.data()));
+  //         // dispatch(setUserID(user?.uid));
+  //         // console.log("ARGTE::", doc.data());
+  //         // setUser(doc.data());
+  //       });
+  //     }
+
+  //     // auth().onAuthStateChanged((user) => {
+  //     //   if (user) {
+  //     //     onSnapshot(doc(db, "users", "" + user.uid), (doc) => {
+  //     //       dispatch(setUserData(doc.data()));
+  //     //     });
+  //     //   } else {
+  //     //     dispatch(setUserData(null));
+  //     //   }
+  //     // });
+  //   } catch (err) {
+  //     // console.log(err);
+  //   }
+  //   // return () => {};
+  // }, []);
 
   React.useEffect(() => {
     onSnapshot(doc(db, "perm-sec", "info"), (doc) => {
@@ -224,13 +263,13 @@ function Dashboard() {
       dispatch(setSevicesData(services));
     });
 
-    const usersQuery = query(collection(db, "users"));
-    onSnapshot(usersQuery, (querySnapshot) => {
-      const users = [];
+    const deptsQuery = query(collection(db, "departments"));
+    onSnapshot(deptsQuery, (querySnapshot) => {
+      const depts = [];
       querySnapshot.forEach((doc) => {
-        users.push(doc.data());
+        depts.push(doc.data());
       });
-      dispatch(setUserData(users));
+      dispatch(setDepartmentsData(depts));
     });
 
     const teamQuery = query(collection(db, "team-members"));
@@ -241,6 +280,15 @@ function Dashboard() {
       });
       dispatch(setTeamData(teams));
     });
+
+    // const q = query(collection(db, "faqs"));
+    // onSnapshot(q, (querySnapshot) => {
+    //   const faqs = [];
+    //   querySnapshot.forEach((doc) => {
+    //     faqs.push(doc.data());
+    //   });
+    //   dispatch(setFAQs(faqs));
+    // });
 
     const LGAsQuery = query(collection(db, "lgas"));
     onSnapshot(LGAsQuery, (querySnapshot) => {
@@ -259,7 +307,16 @@ function Dashboard() {
       });
       dispatch(setEnquiriesData(enquiries));
     });
-  }, []);
+
+    const usersQuery = query(collection(db, "users"));
+    onSnapshot(usersQuery, (querySnapshot) => {
+      const usrs = [];
+      querySnapshot.forEach((doc) => {
+        usrs.push(doc.data());
+      });
+      dispatch(setUserData(usrs));
+    });
+  }, [dispatch, mobileOpen]);
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -290,8 +347,14 @@ function Dashboard() {
     ></Menu>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
+  const initials =
+    myData?.firstname?.slice(0, 1).toUpperCase() +
+    myData?.lastname?.slice(0, 1).toUpperCase();
+
+  let fullname = myData?.firstname + myData?.lastname;
+
+  // const container =
+  //   window !== undefined ? () => window().document.body : undefined;
 
   return (
     <div className={classes.root}>
@@ -331,15 +394,30 @@ function Dashboard() {
                 ></Typography>
               </div>
             )}
-            <IconButton
-              aria-label="show 17 new notifications"
-              color="inherit"
-              edge="end"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              //onClick={handleNotificationMenuOpen}
-            ></IconButton>
-            <IconButton
+            <Box
+              display="flex"
+              flexDirection={"row"}
+              justifyContent="end"
+              alignItems="center"
+            >
+              <Typography pr={1}>
+                {fullname?.length > 16
+                  ? fullname?.slice(0, 12) + "..."
+                  : fullname}
+              </Typography>
+              <Avatar
+                src={myData?.image !== "" ? myData?.image : ""}
+                style={{
+                  width: 32,
+                  height: 32,
+                  borderRadius: 32 / 2,
+                  fontSize: 36,
+                }}
+              >
+                {myData?.image !== "" ? "" : initials}
+              </Avatar>
+            </Box>
+            {/* <IconButton
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
@@ -348,7 +426,7 @@ function Dashboard() {
               color="inherit"
             >
               <SearchIcon style={{ color: theme.palette.secondary.main }} />
-            </IconButton>
+            </IconButton> */}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -419,6 +497,12 @@ function Dashboard() {
             <Route path="/dashboard/about/rsphcmb" exact>
               <RSPHCMB />
             </Route>
+            <Route path="/dashboard/about/departments" exact>
+              <Departments />
+            </Route>
+            <Route path="/dashboard/about/departments/:id" exact>
+              <DepartmentInfo />
+            </Route>
             <Route path="/dashboard/about/rsphcmb/who_we_are_content" exact>
               <WhoWeAreContent />
             </Route>
@@ -457,6 +541,16 @@ function Dashboard() {
             <Route path="/dashboard/resources/downloads" exact>
               <Downloads />
             </Route>
+            <Route path="/dashboard/resources/gallery" exact>
+              <Gallery />
+            </Route>
+            <Route path="/dashboard/resources/gallery/:id" exact>
+              <GalleryInfo />
+            </Route>
+
+            <Route path="/dashboard/resources/research" exact>
+              <Research />
+            </Route>
 
             <Route path="/dashboard/contact" exact>
               <Contact />
@@ -468,6 +562,10 @@ function Dashboard() {
 
             <Route path="/dashboard/enquiries" exact>
               <Enquiries />
+            </Route>
+
+            <Route path="/dashboard/account" exact>
+              <Account />
             </Route>
           </Switch>
         </div>
