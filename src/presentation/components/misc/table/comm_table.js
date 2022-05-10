@@ -30,7 +30,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function CommitteeTable(props) {
-  let { list } = props;
+  let { list, id } = props;
 
   return (
     <TableContainer component={Paper}>
@@ -54,7 +54,12 @@ export default function CommitteeTable(props) {
                 {row?.designation}
               </StyledTableCell>
               <StyledTableCell align="right">
-                <ActionButton selected={row} index={index} />
+                <ActionButton
+                  selected={row}
+                  list={list}
+                  index={index}
+                  lgaID={id}
+                />
               </StyledTableCell>
             </StyledTableRow>
           ))}

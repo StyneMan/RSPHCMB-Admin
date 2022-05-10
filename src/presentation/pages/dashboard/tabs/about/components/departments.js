@@ -184,7 +184,6 @@ const ItemCard = (props) => {
                 image: item?.image,
                 description: item?.description,
                 id: item?.id,
-                functions: item?.functions,
               },
             })
           }

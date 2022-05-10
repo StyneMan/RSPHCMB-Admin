@@ -13,6 +13,7 @@ import contactReducer from "./slice/contact";
 import serviceReducer from "./slice/services";
 import enquiriesReducer from "./slice/enquiry";
 import departmentReducer from "./slice/depts";
+import healthcentreReducer from "./slice/health_centres";
 
 export default configureStore({
   reducer: {
@@ -30,6 +31,7 @@ export default configureStore({
     service: serviceReducer,
     enquiries: enquiriesReducer,
     departments: departmentReducer,
+    healthcentre: healthcentreReducer,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({

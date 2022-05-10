@@ -16,9 +16,11 @@ import {
 import { useSnackbar } from "notistack";
 import Backdrop from "@mui/material/Backdrop";
 import { Box } from "@mui/system";
-import { CircularProgress, TextField } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Grid } from "@mui/material";
+import RichText from "../../components/misc/richtext/";
+import EditableRichText from "../../components/misc/richtext/editable";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -68,12 +70,14 @@ const UpdateTeamForm = (props) => {
     name: name,
     image: "",
     position: position,
-    biography: biography,
   });
   const [file, setFile] = React.useState(null);
   const [isUploading, setIsUploading] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
+  const [bio, setBio] = React.useState(biography);
+  const [isError, setIsError] = React.useState(false);
+  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
   const [previewImage, setPreviewImage] = React.useState("");
 
   const { enqueueSnackbar } = useSnackbar();
@@ -121,7 +125,7 @@ const UpdateTeamForm = (props) => {
             await updateDoc(mRef, {
               name: formValues.name,
               position: formValues.position,
-              biography: formValues.biography,
+              biography: bio,
               updatedAt: timeNow,
               image: downloadURL,
             });
@@ -149,7 +153,6 @@ const UpdateTeamForm = (props) => {
     setFormValues({
       name: formValues.name ? formValues.name : name,
       position: formValues.position ? formValues.position : position,
-      biography: formValues.biography ? formValues.biography : biography,
     });
 
     if (!previewImage) {
@@ -160,7 +163,7 @@ const UpdateTeamForm = (props) => {
         await updateDoc(mRef, {
           name: formValues.name,
           position: formValues.position,
-          biography: formValues.biography,
+          biography: bio,
           updatedAt: timeNow,
         });
         setOpen(false);
@@ -176,17 +179,7 @@ const UpdateTeamForm = (props) => {
       }
     } else {
       //Change on the featured image and all texts
-      const fileRef = ref(storage, "team-members/" + id);
-
-      deleteObject(fileRef)
-        .then(() => {
-          setIsLoading(false);
-          uploadNewImage();
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          //   console.log("ErR: ", error);
-        });
+      uploadNewImage();
     }
   };
 
@@ -272,26 +265,12 @@ const UpdateTeamForm = (props) => {
           errorMessages={["Member's position is required"]}
         />
         <br />
-        <TextField
-          id="outlined-multiline-static"
-          multiline
-          label="Biography"
-          placeholder="Type biography here..."
-          size="small"
-          variant="outlined"
-          value={
-            formValues.biography === " "
-              ? biography
-              : !formValues.biography
-              ? ""
-              : formValues.biography
-          }
-          onChange={handleChange}
-          name="biography"
-          rows={5}
-          fullWidth
-          required
-          className={classes.mb}
+        <EditableRichText
+          value={bio}
+          setValue={setBio}
+          error={isError}
+          setError={setIsError}
+          setIsStartedFilling={setIsStartedFilling}
         />
         <br />
 

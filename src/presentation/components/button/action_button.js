@@ -17,34 +17,50 @@ import CustomDialogDelete from "../dialogs/custom-dialog";
 import { ValidatorForm } from "react-material-ui-form-validator";
 import { TextValidator } from "react-material-ui-form-validator";
 import { Box } from "@mui/system";
+import { doc, updateDoc, db } from "../../../data/firebase";
 
-// const useStyles = makeStyles((theme) => ({
-//     awardRoot: {
-//         display: 'flex',
-//         flexDirection: 'column',
-//     },
-//     awardRow: {
-//         display: 'flex',
-//         flexDirection: 'row',
-//         marginLeft: 'auto',
-//     },
-//     button: {
-//         margin: theme.spacing(1)
-//     }
-// }))
-
-const ActionButton = ({ selected, index, setIsPerforming }) => {
+//Committee Action Button
+const ActionButton = ({ selected, list, index, lgaID }) => {
   // const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openUpdate, setOpenUpdate] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
 
+  const [setLoading] = React.useState(false);
+
   const openAction = Boolean(anchorEl);
   const { enqueueSnackbar } = useSnackbar();
   //   const { notifications, userData } = useSelector((state) => state.user);
   const handleMoreAction = (e) => setAnchorEl(e.currentTarget);
   const handleCloseMoreAction = () => setAnchorEl(null);
+
+  const updateRow = async (index) => {
+    setLoading(true);
+    const mRef = doc(db, "lgas", "" + lgaID);
+
+    let arrCopy = list;
+    arrCopy.forEach((el, key) => {
+      if (key === index) {
+        //Update here
+      }
+    });
+
+    try {
+      await updateDoc(mRef, {
+        committees: list?.filter((el, key) => key !== index),
+      });
+      setLoading(false);
+      enqueueSnackbar(`Row deleted successfully`, {
+        variant: "success",
+      });
+    } catch (error) {
+      // setIsLoading(false);
+      enqueueSnackbar(`${error?.message || "Check your internet connection"}`, {
+        variant: "error",
+      });
+    }
+  };
 
   // const { data: scholarData } = useSWR('/applicants/scholars/' + selected.row._id, APIService.authFetcher);
 
@@ -92,6 +108,9 @@ const ActionButton = ({ selected, index, setIsPerforming }) => {
               setOpen={setOpenDelete}
               name={selected?.name}
               id={index}
+              lgaID={lgaID}
+              list={list}
+              index={index}
             />
           }
           open={openDelete}
@@ -167,12 +186,45 @@ const UpdateView = (props) => {
 };
 
 const DeleteView = (props) => {
-  let { name, index, id, setOpen } = props;
+  let { list, lgaID, name, index, id, setOpen } = props;
 
-  const handleDelete = () => {};
+  const [isLoading, setLoading] = React.useState(false);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const deleteRow = async () => {
+    setLoading(true);
+    const mRef = doc(db, "lgas", "" + lgaID);
+    try {
+      await updateDoc(mRef, {
+        committees: list?.filter((el, key) => key !== index),
+      });
+      setLoading(false);
+      setOpen(false);
+      enqueueSnackbar(`Row deleted successfully`, {
+        variant: "success",
+      });
+    } catch (error) {
+      // setIsLoading(false);
+      enqueueSnackbar(`${error?.message || "Check your internet connection"}`, {
+        variant: "error",
+      });
+    }
+  };
 
   return (
     <div>
+      <Backdrop style={{ zIndex: 1200 }} open={isLoading}>
+        {isLoading ? (
+          <CircularProgress
+            size={90}
+            thickness={3.0}
+            style={{ color: "white" }}
+          />
+        ) : (
+          <div />
+        )}
+      </Backdrop>
       <Typography gutterBottom>
         Are you sure you want to delete {name} from table?
       </Typography>
@@ -195,7 +247,7 @@ const DeleteView = (props) => {
         <Button
           variant="contained"
           sx={{ textTransform: "none" }}
-          onClick={handleDelete}
+          onClick={deleteRow}
         >
           Delete
         </Button>

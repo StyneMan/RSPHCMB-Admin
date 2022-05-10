@@ -8,6 +8,7 @@ import { CircularProgress } from "@mui/material";
 import RichText from "../../components/misc/richtext";
 import { useLocation, useHistory } from "react-router-dom";
 import { ArrowBackIosNew } from "@mui/icons-material";
+import EditableRichText from "../../components/misc/richtext/editable";
 
 const WhoWeAreContent = (props) => {
   const location = useLocation();
@@ -62,7 +63,7 @@ const WhoWeAreContent = (props) => {
       <br />
       <br />
       <ValidatorForm onSubmit={updateData}>
-        <RichText
+        <EditableRichText
           value={body}
           setValue={setBody}
           error={isError}

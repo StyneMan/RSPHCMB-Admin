@@ -10,7 +10,6 @@ import {
   doc,
   uploadBytesResumable,
   getDownloadURL,
-  deleteObject,
   updateDoc,
 } from "../../../data/firebase";
 import { useSnackbar } from "notistack";
@@ -19,8 +18,9 @@ import { Box } from "@mui/system";
 import { CircularProgress } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Grid } from "@mui/material";
-import { MenuItem } from "@mui/material";
-import RichText from "../../components/misc/richtext";
+// import { MenuItem } from "@mui/material";
+// import RichText from "../../components/misc/richtext";
+import EditableRichText from "../../components/misc/richtext/editable";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -194,20 +194,12 @@ const EditServiceForm = (props) => {
       }
     } else {
       //Change on the featured image and all texts
-      const fileRef = ref(
-        storage,
-        type === "featured" ? "services-featured/" : "services/" + id
-      );
+      // const fileRef = ref(
+      //   storage,
+      //   type === "featured" ? "services-featured/" : "services/" + id
+      // );
 
-      deleteObject(fileRef)
-        .then(() => {
-          setIsLoading(false);
-          uploadNewImage();
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          console.log("ErR: ", error);
-        });
+      uploadNewImage();
     }
   };
 
@@ -275,7 +267,7 @@ const EditServiceForm = (props) => {
           errorMessages={["Service title is required"]}
         />
 
-        <RichText
+        <EditableRichText
           value={serviceBody}
           setValue={setServiceBody}
           error={isError}

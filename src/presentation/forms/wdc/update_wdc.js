@@ -1,11 +1,11 @@
 import { Button, LinearProgress } from "@mui/material";
 import React from "react";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-import RichText from "../../components/misc/richtext";
 import { useSnackbar } from "notistack";
 import { db, doc, updateDoc } from "../../../data/firebase";
 import { useLocation, useHistory } from "react-router-dom";
 import { ArrowBackIosNew } from "@mui/icons-material";
+import EditableRichText from "../../components/misc/richtext/editable";
 
 const UpdateWDC = () => {
   const location = useLocation();
@@ -42,11 +42,11 @@ const UpdateWDC = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    console.log("LO", body);
+    // console.log("LO", body);
 
     const mRef = doc(db, "contents", "wdc");
     try {
-      let resp = await updateDoc(mRef, {
+      await updateDoc(mRef, {
         title: title,
         body: body,
       });
@@ -90,7 +90,7 @@ const UpdateWDC = () => {
           errorMessages={["Title is required"]}
         />
         <br />
-        <RichText
+        <EditableRichText
           value={body}
           setValue={setBody}
           error={isError}

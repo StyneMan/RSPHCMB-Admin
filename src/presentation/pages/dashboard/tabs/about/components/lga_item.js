@@ -177,7 +177,7 @@ const LGAItem = () => {
         <Divider />
         <br />
         <Box>
-          <CommitteeTable list={lgaItem?.committees} />
+          <CommitteeTable list={lgaItem?.committees} id={lgaItem?.id} />
         </Box>
 
         <br />
@@ -203,7 +203,7 @@ const LGAItem = () => {
         <Divider />
         <br />
         <Box>
-          <FacilitiesTable list={lgaItem?.facilities} />
+          <FacilitiesTable list={lgaItem?.facilities} id={lgaItem?.id} />
         </Box>
       </Container>
     </div>

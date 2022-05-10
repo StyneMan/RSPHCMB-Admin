@@ -35,6 +35,7 @@ import {
 } from "../../../../../data/firebase";
 import { makeStyles } from "@mui/styles";
 import RichText from "../../../../components/misc/richtext";
+import EditableRichText from "../../../../components/misc/richtext/editable";
 
 const CircularProgressWithLabel = (props) => {
   return (
@@ -555,7 +556,7 @@ const UpdateBio = (props) => {
         )}
       </Backdrop>
       <ValidatorForm onSubmit={updateName}>
-        <RichText
+        <EditableRichText
           value={body}
           setValue={setBody}
           error={isError}
@@ -624,7 +625,7 @@ const UpdateMessage = (props) => {
         )}
       </Backdrop>
       <ValidatorForm onSubmit={updateMessage}>
-        <RichText
+        <EditableRichText
           value={body}
           setValue={setBody}
           error={isError}

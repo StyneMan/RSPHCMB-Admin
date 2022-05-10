@@ -21,7 +21,7 @@ import { Typography } from "@mui/material";
 import { Grid } from "@mui/material";
 import { useHistory, useLocation } from "react-router-dom";
 import { ArrowBackIosNew } from "@mui/icons-material";
-import RichText from "../../components/misc/richtext";
+import EditableRichText from "../../components/misc/richtext/editable";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -260,7 +260,7 @@ const VisionSection = () => {
         <br />
         <br />
 
-        <RichText
+        <EditableRichText
           value={missionBody}
           setValue={setMissionBody}
           error={isError}

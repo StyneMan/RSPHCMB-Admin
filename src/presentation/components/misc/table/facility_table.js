@@ -30,7 +30,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function FacilitiesTable(props) {
-  let { list } = props;
+  let { list, id } = props;
 
   // React.useEffect(() => {
   //   console.log("HJ", list);
@@ -54,7 +54,12 @@ export default function FacilitiesTable(props) {
               </StyledTableCell>
               <StyledTableCell align="right">{row?.name}</StyledTableCell>
               <StyledTableCell align="right">
-                <ActionButton2 selected={row} index={index} />
+                <ActionButton2
+                  selected={row}
+                  index={index}
+                  list={list}
+                  lgaID={id}
+                />
               </StyledTableCell>
             </StyledTableRow>
           ))}

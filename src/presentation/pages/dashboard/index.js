@@ -6,7 +6,7 @@ import Hidden from "@mui/material/Hidden";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
-import { makeStyles, useTheme } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import { Switch, Route } from "react-router-dom";
 
 import Drawer1 from "../../components/dashboard/drawer/Drawer1";
@@ -19,7 +19,6 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
 
-import SearchIcon from "@mui/icons-material/Search";
 import Typography from "@mui/material/Typography";
 import Overview from "./tabs";
 import Home from "./tabs/home";
@@ -33,7 +32,11 @@ import { setPermSecData } from "../../../data/redux/slice/perm_sec";
 import { setTeamData } from "../../../data/redux/slice/team";
 import { setContact } from "../../../data/redux/slice/contact";
 import { setUserData } from "../../../data/redux/slice/user";
-import { setDepartmentsData } from "../../../data/redux/slice/depts";
+import { setHealthCentre } from "../../../data/redux/slice/health_centres";
+import {
+  setDepartmentsData,
+  setDeptFunctions,
+} from "../../../data/redux/slice/depts";
 import {
   setFeaturedService,
   setSevicesData,
@@ -80,6 +83,7 @@ import Account from "./tabs/account";
 import { useSelector } from "react-redux";
 import { Avatar } from "@mui/material";
 import { Box } from "@mui/system";
+import HealthCentres from "./tabs/about/health_centres";
 
 const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
@@ -153,7 +157,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Dashboard() {
   const classes = useStyles();
-  const theme = useTheme();
+  // const theme = useTheme();
   const dispatch = useDispatch();
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -239,6 +243,10 @@ function Dashboard() {
       dispatch(setData(doc.data()));
     });
 
+    onSnapshot(doc(db, "about", "health-centres"), (doc) => {
+      dispatch(setHealthCentre(doc.data()));
+    });
+
     onSnapshot(doc(db, "contents", "wdc"), (doc) => {
       // console.log("Current data: ", doc.data());
       dispatch(setWDCData(doc.data()));
@@ -270,6 +278,15 @@ function Dashboard() {
         depts.push(doc.data());
       });
       dispatch(setDepartmentsData(depts));
+    });
+
+    const q = query(collection(db, "dept-functions"));
+    onSnapshot(q, (querySnapshot) => {
+      const fn = [];
+      querySnapshot.forEach((doc) => {
+        fn.push(doc.data());
+      });
+      dispatch(setDeptFunctions(fn));
     });
 
     const teamQuery = query(collection(db, "team-members"));
@@ -520,6 +537,9 @@ function Dashboard() {
             </Route>
             <Route path="/dashboard/about/lga/:id" exact>
               <LGAItem />
+            </Route>
+            <Route path="/dashboard/about/health_centres" exact>
+              <HealthCentres />
             </Route>
             <Route path="/dashboard/about/wdc" exact>
               <WDC />

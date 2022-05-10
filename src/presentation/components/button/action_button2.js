@@ -17,25 +17,10 @@ import CustomDialogDelete from "../dialogs/custom-dialog";
 import { ValidatorForm } from "react-material-ui-form-validator";
 import { TextValidator } from "react-material-ui-form-validator";
 import { Box } from "@mui/system";
+import { updateDoc, db, doc } from "../../../data/firebase";
 
-// const useStyles = makeStyles((theme) => ({
-//     awardRoot: {
-//         display: 'flex',
-//         flexDirection: 'column',
-//     },
-//     awardRow: {
-//         display: 'flex',
-//         flexDirection: 'row',
-//         marginLeft: 'auto',
-//     },
-//     button: {
-//         margin: theme.spacing(1)
-//     }
-// }))
-
-const ActionButton2 = ({ selected, index, setIsPerforming }) => {
-  // const classes = useStyles();
-
+//Facilities Table Action Button
+const ActionButton2 = ({ selected, index, setIsPerforming, list, lgaID }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openUpdate, setOpenUpdate] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -88,6 +73,9 @@ const ActionButton2 = ({ selected, index, setIsPerforming }) => {
               setOpen={setOpenDelete}
               name={selected?.name}
               id={index}
+              lgaID={lgaID}
+              list={list}
+              index={index}
             />
           }
           open={openDelete}
@@ -152,9 +140,31 @@ const UpdateView = (props) => {
 };
 
 const DeleteView = (props) => {
-  let { name, id, setOpen } = props;
+  let { list, lgaID, name, index, setOpen } = props;
 
-  const handleDelete = () => {};
+  const [isLoading, setLoading] = React.useState(false);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const deleteRow = async () => {
+    setLoading(true);
+    const mRef = doc(db, "lgas", "" + lgaID);
+    try {
+      await updateDoc(mRef, {
+        facilities: list?.filter((el, key) => key !== index),
+      });
+      setLoading(false);
+      setOpen(false);
+      enqueueSnackbar(`Row deleted successfully`, {
+        variant: "success",
+      });
+    } catch (error) {
+      // setIsLoading(false);
+      enqueueSnackbar(`${error?.message || "Check your internet connection"}`, {
+        variant: "error",
+      });
+    }
+  };
 
   return (
     <div>
@@ -180,7 +190,7 @@ const DeleteView = (props) => {
         <Button
           variant="contained"
           sx={{ textTransform: "none" }}
-          onClick={handleDelete}
+          onClick={deleteRow}
         >
           Delete
         </Button>

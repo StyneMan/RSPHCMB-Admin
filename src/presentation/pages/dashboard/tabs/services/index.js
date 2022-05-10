@@ -29,7 +29,7 @@ import {
 import { useSnackbar } from "notistack";
 import NewServiceForm from "../../../../forms/services/new_service_form";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import MUIRichTextEditor from "mui-rte";
 import EditServiceForm from "../../../../forms/services/edit_service_form";
 import FeaturedServiceForm from "../../../../forms/services/set_featured_service";
@@ -96,7 +96,7 @@ const ServiceItemCard = (props) => {
   const [open, setOpen] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const history = useHistory();
+  // const history = useHistory();
 
   const deleteService = () => {
     setOpenDelete(false);
@@ -266,7 +266,7 @@ const ServiceItemCard = (props) => {
 
 const Services = () => {
   const classes = useStyles();
-  const history = useHistory();
+  // const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [serviceList, setServiceList] = React.useState(null);

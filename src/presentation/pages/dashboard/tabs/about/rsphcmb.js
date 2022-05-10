@@ -341,7 +341,7 @@ const RSPHCMB = () => {
               <Typography fontWeight={"600"} gutterBottom>
                 GOVERNOR
               </Typography>
-              <img src={data?.visionImage} alt="" width={"75%"} />
+              <img src={data?.governorImage} alt="" width={"75%"} />
               <br />
               <Typography gutterBottom>{data?.governorName}</Typography>
               <Typography gutterBottom>Governor, Rivers State</Typography>
@@ -354,10 +354,12 @@ const RSPHCMB = () => {
               <Typography fontWeight={"600"} gutterBottom>
                 DEPUTY GOVERNOR
               </Typography>
-              <img src={data?.visionImage} alt="" width={"75%"} />
+              <img src={data?.deputyGovImage} alt="" width={"75%"} />
               <br />
-              <Typography gutterBottom>{data?.governorName}</Typography>
-              <Typography gutterBottom>Governor, Rivers State</Typography>
+              <Typography gutterBottom>{data?.deputyGovName}</Typography>
+              <Typography gutterBottom>
+                Deputy Governor, Rivers State
+              </Typography>
             </Box>
           </Grid>
         </Grid>

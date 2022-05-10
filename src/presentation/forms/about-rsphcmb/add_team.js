@@ -15,8 +15,9 @@ import {
 import { useSnackbar } from "notistack";
 import Backdrop from "@mui/material/Backdrop";
 import { Box } from "@mui/system";
-import { CircularProgress, Grid, TextField } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
 import { Typography } from "@mui/material";
+import RichText from "../../components/misc/richtext";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -61,7 +62,6 @@ const AddTeamMember = (props) => {
   let { setOpen } = props;
   const [formValues, setFormValues] = React.useState({
     name: "",
-    biography: "",
     position: "",
     image: "",
   });
@@ -69,6 +69,9 @@ const AddTeamMember = (props) => {
   const [isUploading, setIsUploading] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
+  const [bio, setBio] = React.useState();
+  const [isError, setIsError] = React.useState(false);
+  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
   const [previewPassport, setPreviewPassport] = React.useState("");
 
   const { enqueueSnackbar } = useSnackbar();
@@ -120,7 +123,7 @@ const AddTeamMember = (props) => {
             name: formValues.name,
             image: downloadURL,
             position: formValues.position,
-            biography: formValues.biography,
+            biography: bio,
           })
             .then((res) => {
               setOpen(false);
@@ -209,20 +212,12 @@ const AddTeamMember = (props) => {
           errorMessages={["Member's position is required"]}
         />
         <br />
-        <TextField
-          id="outlined-multiline-static"
-          multiline
-          label="Biography"
-          placeholder="Type biography here..."
-          size="small"
-          variant="outlined"
-          value={formValues.biography}
-          onChange={handleChange}
-          name="biography"
-          rows={5}
-          fullWidth
-          required
-          className={classes.mb}
+        <RichText
+          value={bio}
+          setValue={setBio}
+          error={isError}
+          setError={setIsError}
+          setIsStartedFilling={setIsStartedFilling}
         />
         <br />
 

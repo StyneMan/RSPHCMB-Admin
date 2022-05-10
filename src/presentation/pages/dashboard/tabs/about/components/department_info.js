@@ -1,6 +1,8 @@
-import { Add, ArrowBackIosNew, Delete } from "@mui/icons-material";
+import { Add, ArrowBackIosNew, Delete, Edit } from "@mui/icons-material";
 import {
+  Backdrop,
   Button,
+  CircularProgress,
   Container,
   Divider,
   IconButton,
@@ -8,41 +10,51 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
+import { useSnackbar } from "notistack";
 import { useHistory, useLocation } from "react-router-dom";
 import CustomDialog from "../../../../../components/dialogs/custom-dialog";
+import UpdateDialog from "../../../../../components/dialogs/custom-dialog";
 import DeleteDialog from "../../../../../components/dialogs/custom-dialog";
-import AddFunctionForm from "../../../../../forms/department/add_function";
-import { onSnapshot, doc, db } from "../../../../../../data/firebase";
+// import AddFunctionForm from "../../../../../forms/department/add_function";
+import {
+  doc,
+  db,
+  deleteDoc,
+  query,
+  where,
+  onSnapshot,
+  collection,
+} from "../../../../../../data/firebase";
 
-const DepartmentInfo = () => {
-  const history = useHistory();
-  const location = useLocation();
+import { useSelector } from "react-redux";
+import UpdateFunctionForm from "../../../../../forms/department/update_function";
+import AddDeptFunctionForm from "../../../../../forms/department/add_dept_function";
 
-  const [open, setOpen] = React.useState(false);
+const Item = (props) => {
+  let { setLoading, item, index } = props;
+
   const [open2, setOpen2] = React.useState(false);
-  const [functions, setFunctions] = React.useState([]);
+  const [open3, setOpen3] = React.useState(false);
 
-  React.useEffect(() => {
-    onSnapshot(doc(db, "departments", "" + location?.state?.id), (doc) => {
-      // console.log("Current data: ", doc.data());
-      setFunctions(doc.data()?.functions);
-    });
-  }, [functions, location?.state?.id]);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const deleteFunct = async (item) => {
+    setLoading(true);
+    try {
+      await deleteDoc(doc(db, "dept-functions", "" + item?.id));
+      enqueueSnackbar(`Item deleted successfully`, {
+        variant: "success",
+      });
+    } catch (error) {
+      console.log("ERR: Del: ", error);
+      enqueueSnackbar(`Item not deleted. Try again`, {
+        variant: "error",
+      });
+    }
+  };
 
   return (
     <div>
-      <CustomDialog
-        open={open}
-        title="Add Department Function"
-        handleClose={() => setOpen(false)}
-        bodyComponent={
-          <AddFunctionForm
-            id={location?.state?.id}
-            list={location?.state?.functions}
-            setOpen={setOpen}
-          />
-        }
-      />
       <DeleteDialog
         open={open2}
         title="Delete Department Function"
@@ -58,13 +70,17 @@ const DepartmentInfo = () => {
               justifyContent={"end"}
               alignItems="center"
             >
-              <Button variant="contained" onClick={() => setOpen2(false)}>
+              <Button
+                sx={{ mx: 1 }}
+                variant="contained"
+                onClick={() => setOpen2(false)}
+              >
                 Cancel
               </Button>
               <Button
                 variant="contained"
                 sx={{ backgroundColor: "red" }}
-                onClick={() => setOpen2(false)}
+                onClick={() => deleteFunct(item)}
               >
                 Delete
               </Button>
@@ -72,6 +88,101 @@ const DepartmentInfo = () => {
           </div>
         }
       />
+      <UpdateDialog
+        open={open3}
+        title="Update Department Function"
+        handleClose={() => setOpen3(false)}
+        bodyComponent={
+          <UpdateFunctionForm
+            func={item?.function}
+            id={item?.id}
+            setOpen={setOpen3}
+          />
+        }
+      />
+      <Box
+        py={1}
+        display={"flex"}
+        flexDirection="row"
+        justifyContent={"start"}
+        alignItems="center"
+      >
+        <Typography pr={2}>{index + 1}.</Typography>
+        <Box
+          display={"flex"}
+          flexDirection="row"
+          justifyContent={"start"}
+          alignItems="center"
+        >
+          <Typography pl={2} flex={1}>
+            {item?.function}
+          </Typography>
+          <IconButton onClick={() => setOpen2(true)}>
+            <Delete />
+          </IconButton>
+
+          <IconButton onClick={() => setOpen3(true)}>
+            <Edit />
+          </IconButton>
+        </Box>
+      </Box>
+      <Divider />
+    </div>
+  );
+};
+
+const DepartmentInfo = () => {
+  const history = useHistory();
+  const location = useLocation();
+
+  const [open, setOpen] = React.useState(false);
+  const [functions, setFunctions] = React.useState();
+  const [isLoading, setLoading] = React.useState(false);
+
+  const { deptFunctions } = useSelector((state) => state.departments);
+
+  React.useEffect(() => {
+    // const res = deptFunctions?.filter(
+    //   (el) => el?.departments === location?.state?.id
+    // );
+    // setFunctions(res);
+
+    const q = query(
+      collection(db, "dept-functions"),
+      where("department", "==", location.state?.id)
+    );
+    onSnapshot(q, (querySnapshot) => {
+      const fn = [];
+      querySnapshot.forEach((doc) => {
+        fn.push(doc.data());
+      });
+      setFunctions(fn);
+      // dispatch(setDeptFunctions(fn));
+    });
+  }, [deptFunctions, functions]);
+
+  return (
+    <div>
+      <Backdrop style={{ zIndex: 1200 }} open={isLoading}>
+        {isLoading ? (
+          <CircularProgress
+            size={90}
+            thickness={3.0}
+            style={{ color: "white" }}
+          />
+        ) : (
+          <div />
+        )}
+      </Backdrop>
+      <CustomDialog
+        open={open}
+        title="Add Department Function"
+        handleClose={() => setOpen(false)}
+        bodyComponent={
+          <AddDeptFunctionForm deptId={location?.state?.id} setOpen={setOpen} />
+        }
+      />
+
       <Container>
         <Box
           py={2}
@@ -121,34 +232,7 @@ const DepartmentInfo = () => {
         <br />
         {functions?.map((item, index) => (
           <Container key={index}>
-            <Box
-              display={"flex"}
-              flexDirection="row"
-              justifyContent={"space-between"}
-              alignItems="center"
-            >
-              <div
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: 3,
-                  backgroundColor: "black",
-                }}
-              />
-              <Box
-                display={"flex"}
-                flexDirection="row"
-                justifyContent={"start"}
-                alignItems="center"
-              >
-                <Typography pl={2} flex={1}>
-                  {item?.text}
-                </Typography>
-                <IconButton onClick={() => setOpen2(true)}>
-                  <Delete />
-                </IconButton>
-              </Box>
-            </Box>
+            <Item setLoading={setLoading} item={item} index={index} />
           </Container>
         ))}
         {functions?.length < 1 && (
@@ -159,7 +243,7 @@ const DepartmentInfo = () => {
             justifyContent="center"
             alignItems={"center"}
           >
-            <Typography>No record found</Typography>
+            <Typography>No records found</Typography>
           </Box>
         )}
       </Container>

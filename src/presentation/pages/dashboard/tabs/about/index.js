@@ -89,6 +89,11 @@ const About = () => {
       to: "/dashboard/about/lga",
     },
     {
+      title: "Health Centres",
+      desc: "Manage Health Centres data",
+      to: "/dashboard/about/health_centres",
+    },
+    {
       title: "WDC",
       desc: "Manage WDC data",
       to: "/dashboard/about/wdc",
