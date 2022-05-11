@@ -1,6 +1,6 @@
 import React from "react";
 import MUIRichTextEditor from "mui-rte";
-import { EditorState, convertToRaw } from "draft-js";
+import { convertToRaw } from "draft-js";
 // import { createMuiTheme } from "@mui/core/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 

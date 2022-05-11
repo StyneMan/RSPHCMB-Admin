@@ -34,7 +34,6 @@ import {
   deleteObject,
 } from "../../../../../data/firebase";
 import { makeStyles } from "@mui/styles";
-import RichText from "../../../../components/misc/richtext";
 import EditableRichText from "../../../../components/misc/richtext/editable";
 
 const CircularProgressWithLabel = (props) => {
@@ -430,7 +429,7 @@ const UpdateName = (props) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e) => {
-    const { id, name, value } = e.target;
+    const { name, value } = e.target;
     setFormValues((prevData) => ({ ...prevData, [name]: value }));
   };
 

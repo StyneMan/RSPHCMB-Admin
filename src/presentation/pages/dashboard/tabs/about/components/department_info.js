@@ -45,7 +45,9 @@ const Item = (props) => {
       enqueueSnackbar(`Item deleted successfully`, {
         variant: "success",
       });
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log("ERR: Del: ", error);
       enqueueSnackbar(`Item not deleted. Try again`, {
         variant: "error",

@@ -96,26 +96,26 @@ const ItemCard = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
 
-  const deleteService = () => {
+  const deleteService = async () => {
     setOpenDelete(false);
-    const fileRef = ref(storage, "reports/" + item?.id);
+    // const fileRef = ref(storage, "reports/" + item?.id);
 
-    deleteObject(fileRef)
-      .then(async () => {
-        // Images deleted now delete from firestore,
-        try {
-          await deleteDoc(doc(db, "reports", "" + item?.id));
-          enqueueSnackbar(`Item deleted successfully`, {
-            variant: "success",
-          });
-        } catch (error) {
-          console.log("ERR: Del: ", error);
-          enqueueSnackbar(`Item not deleted. Try again`, {
-            variant: "error",
-          });
-        }
-      })
-      .catch((err) => {});
+    // deleteObject(fileRef)
+    //   .then(async () => {
+    // Images deleted now delete from firestore,
+    try {
+      await deleteDoc(doc(db, "reports", "" + item?.id));
+      enqueueSnackbar(`Item deleted successfully`, {
+        variant: "success",
+      });
+    } catch (error) {
+      console.log("ERR: Del: ", error);
+      enqueueSnackbar(`Item not deleted. Try again`, {
+        variant: "error",
+      });
+    }
+    // })
+    // .catch((err) => {});
   };
 
   const deleteBody = (

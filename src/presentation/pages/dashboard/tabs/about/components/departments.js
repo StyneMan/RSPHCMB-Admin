@@ -24,7 +24,7 @@ import AddDepartmentForm from "../../../../../forms/department/add_department";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: 256,
+    height: 275,
     width: "100%",
   },
   row: {
@@ -190,6 +190,24 @@ const ItemCard = (props) => {
         >
           <CardMedia image={item?.image} className={classes.cardMedia} />
           <Divider />
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{ mx: 1, mt: 1 }}
+            onClick={() =>
+              history.push({
+                pathname: "/dashboard/about/departments/" + item?.id,
+                state: {
+                  title: item?.title,
+                  image: item?.image,
+                  description: item?.description,
+                  id: item?.id,
+                },
+              })
+            }
+          >
+            Function
+          </Button>
           {/* <Typography
             justifyContent="stretch"
             textAlign="left"

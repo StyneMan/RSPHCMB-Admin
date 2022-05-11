@@ -21,15 +21,12 @@ import {
   collection,
   db,
   doc,
-  ref,
-  deleteObject,
-  storage,
   deleteDoc,
 } from "../../../../../data/firebase";
 import { useSnackbar } from "notistack";
 import NewServiceForm from "../../../../forms/services/new_service_form";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
-// import { useHistory } from "react-router-dom";
+
 import MUIRichTextEditor from "mui-rte";
 import EditServiceForm from "../../../../forms/services/edit_service_form";
 import FeaturedServiceForm from "../../../../forms/services/set_featured_service";
@@ -98,35 +95,26 @@ const ServiceItemCard = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   // const history = useHistory();
 
-  const deleteService = () => {
+  const deleteService = async () => {
     setOpenDelete(false);
-    const fileRef = ref(
-      storage,
-      type === "featured" ? "services-featured/" : "services/" + item?.id
-    );
 
-    deleteObject(fileRef)
-      .then(async () => {
-        // Images deleted now delete from firestore,
-        try {
-          await deleteDoc(
-            doc(
-              db,
-              type === "featured" ? "services-featured" : "services",
-              "" + item?.id
-            )
-          );
-          enqueueSnackbar(`Item deleted successfully`, {
-            variant: "success",
-          });
-        } catch (error) {
-          console.log("ERR: Del: ", error);
-          enqueueSnackbar(`Item not deleted. Try again`, {
-            variant: "error",
-          });
-        }
-      })
-      .catch((err) => {});
+    try {
+      await deleteDoc(
+        doc(
+          db,
+          type === "featured" ? "services-featured" : "services",
+          "" + item?.id
+        )
+      );
+      enqueueSnackbar(`Item deleted successfully`, {
+        variant: "success",
+      });
+    } catch (error) {
+      // console.log("ERR: Del: ", error);
+      enqueueSnackbar(`Item not deleted. Try again`, {
+        variant: "error",
+      });
+    }
   };
 
   const deleteBody = (

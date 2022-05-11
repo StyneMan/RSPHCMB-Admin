@@ -10,7 +10,6 @@ import {
   doc,
   uploadBytesResumable,
   getDownloadURL,
-  deleteObject,
   updateDoc,
 } from "../../../data/firebase";
 import { useSnackbar } from "notistack";
@@ -19,7 +18,7 @@ import { Box } from "@mui/system";
 import { CircularProgress } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Grid } from "@mui/material";
-import RichText from "../../components/misc/richtext/";
+// import RichText from "../../components/misc/richtext/";
 import EditableRichText from "../../components/misc/richtext/editable";
 
 const useStyles = makeStyles((theme) => ({

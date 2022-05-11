@@ -17,14 +17,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { useSnackbar } from "notistack";
-import {
-  storage,
-  ref,
-  db,
-  deleteObject,
-  deleteDoc,
-  doc,
-} from "../../../../../data/firebase";
+import { db, deleteDoc, doc } from "../../../../../data/firebase";
 import CustomDialog from "../../../../components/dialogs/custom-dialog";
 import DeleteDialog from "../../../../components/dialogs/custom-dialog";
 import AddTeamMember from "../../../../forms/about-rsphcmb/add_team";
@@ -58,31 +51,31 @@ const useStyles = makeStyles((theme) => ({
 const CardItem = (props) => {
   const classes = useStyles();
   const { image, name, position, id, biography } = props;
-  const history = useHistory();
+  // const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
-  const deleteService = () => {
+  const deleteService = async () => {
     setOpenDelete(false);
-    const fileRef = ref(storage, "team-members/" + id);
+    // const fileRef = ref(storage, "team-members/" + id);
 
-    deleteObject(fileRef)
-      .then(async () => {
-        // Images deleted now delete from firestore,
-        try {
-          await deleteDoc(doc(db, "team-members", "" + id));
-          enqueueSnackbar(`Item deleted successfully`, {
-            variant: "success",
-          });
-        } catch (error) {
-          // console.log("ERR: Del: ", error);
-          enqueueSnackbar(`Item not deleted. Try again`, {
-            variant: "error",
-          });
-        }
-      })
-      .catch((err) => {});
+    // deleteObject(fileRef)
+    //   .then(async () => {
+    //     // Images deleted now delete from firestore,
+    try {
+      await deleteDoc(doc(db, "team-members", "" + id));
+      enqueueSnackbar(`Item deleted successfully`, {
+        variant: "success",
+      });
+    } catch (error) {
+      // console.log("ERR: Del: ", error);
+      enqueueSnackbar(`Item not deleted. Try again`, {
+        variant: "error",
+      });
+    }
+    // })
+    // .catch((err) => {});
   };
 
   const deleteBody = (

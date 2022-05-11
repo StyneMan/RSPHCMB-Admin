@@ -1,11 +1,11 @@
 import React from "react";
-import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { ValidatorForm } from "react-material-ui-form-validator";
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
 import { db, doc, updateDoc } from "../../../data/firebase";
 import { useSnackbar } from "notistack";
 import Backdrop from "@mui/material/Backdrop";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, TextField } from "@mui/material";
 
 const useStyles = makeStyles(() => ({
   image: {
@@ -71,7 +71,9 @@ const UpdateFunctionForm = (props) => {
         )}
       </Backdrop>
       <ValidatorForm onSubmit={updateDepartment}>
-        <TextValidator
+        <TextField
+          multiline
+          minRows={2}
           className={classes.mb}
           label="Function"
           size="small"
@@ -87,11 +89,10 @@ const UpdateFunctionForm = (props) => {
           name="function"
           fullWidth
           required
-          validators={["required"]}
-          errorMessages={["Function is required"]}
         />
         <br />
         <Button
+          sx={{ mt: 2 }}
           type="submit"
           variant="contained"
           disabled={isLoading}

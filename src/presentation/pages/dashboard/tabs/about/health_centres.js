@@ -11,7 +11,6 @@ import CustomDialog from "../../../../components/dialogs/custom-dialog";
 import { useSnackbar } from "notistack";
 import { updateDoc, db, doc } from "../../../../../data/firebase/";
 import { ValidatorForm } from "react-material-ui-form-validator";
-import RichText from "../../../../components/misc/richtext";
 import MUIRichTextEditor from "mui-rte";
 import { useSelector } from "react-redux";
 import EditableRichText from "../../../../components/misc/richtext/editable";

@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { db, doc, setDoc } from "../../../data/firebase";
 import { useSnackbar } from "notistack";
 import Backdrop from "@mui/material/Backdrop";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, TextField } from "@mui/material";
 
 const AddDeptFunctionForm = (props) => {
   let { setOpen, deptId } = props;
@@ -57,8 +57,11 @@ const AddDeptFunctionForm = (props) => {
         )}
       </Backdrop>
       <ValidatorForm onSubmit={addRecord}>
-        <TextValidator
+        <TextField
           label="Function"
+          multiline={true}
+          // minRows={2}
+          rows={3}
           size="small"
           variant="outlined"
           value={formValues.text}
@@ -67,12 +70,11 @@ const AddDeptFunctionForm = (props) => {
           fullWidth
           required
           placeholder="Add new function"
-          validators={["required"]}
-          errorMessages={["Function is required"]}
         />
         <br />
 
         <Button
+          sx={{ mt: 2 }}
           type="submit"
           variant="contained"
           disabled={isLoading}

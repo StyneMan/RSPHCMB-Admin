@@ -9,7 +9,6 @@ import {
   storage,
   updateDoc,
   doc,
-  deleteObject,
   uploadBytesResumable,
   getDownloadURL,
 } from "../../../data/firebase";
@@ -172,17 +171,18 @@ const UpdateReportForm = (props) => {
       }
     } else {
       //Change on the featured image and all texts
-      const fileRef = ref(storage, "reports/" + id);
+      uploadNewImage();
+      // const fileRef = ref(storage, "reports/" + id);
 
-      deleteObject(fileRef)
-        .then(() => {
-          setIsLoading(false);
-          uploadNewImage();
-        })
-        .catch((error) => {
-          setIsLoading(false);
-          //   console.log("ErR: ", error);
-        });
+      // deleteObject(fileRef)
+      //   .then(() => {
+      //     setIsLoading(false);
+
+      //   })
+      //   .catch((error) => {
+      //     setIsLoading(false);
+      //     //   console.log("ErR: ", error);
+      //   });
     }
   };
 

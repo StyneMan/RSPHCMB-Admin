@@ -187,9 +187,9 @@ function Dashboard() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleProfileMenuOpen = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
