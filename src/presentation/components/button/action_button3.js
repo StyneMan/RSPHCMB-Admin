@@ -10,7 +10,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { useSnackbar } from "notistack";
+// import { useSnackbar } from "notistack";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CustomDialogView from "../dialogs/custom-dialog";
 import CustomDialogEdit from "../dialogs/custom-dialog";
@@ -19,21 +19,6 @@ import { ValidatorForm } from "react-material-ui-form-validator";
 import { TextValidator } from "react-material-ui-form-validator";
 import { Box } from "@mui/system";
 import Preview from "../preview";
-
-// const useStyles = makeStyles((theme) => ({
-//     awardRoot: {
-//         display: 'flex',
-//         flexDirection: 'column',
-//     },
-//     awardRow: {
-//         display: 'flex',
-//         flexDirection: 'row',
-//         marginLeft: 'auto',
-//     },
-//     button: {
-//         margin: theme.spacing(1)
-//     }
-// }))
 
 const ActionButton3 = ({ selected, index, setIsPerforming }) => {
   // const classes = useStyles();
@@ -44,7 +29,7 @@ const ActionButton3 = ({ selected, index, setIsPerforming }) => {
   const [openDelete, setOpenDelete] = React.useState(false);
 
   const openAction = Boolean(anchorEl);
-  const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
   //   const { notifications, userData } = useSelector((state) => state.user);
   const handleMoreAction = (e) => setAnchorEl(e.currentTarget);
   const handleCloseMoreAction = () => setAnchorEl(null);
@@ -111,14 +96,14 @@ const ActionButton3 = ({ selected, index, setIsPerforming }) => {
 };
 
 const UpdateView = (props) => {
-  let { setOpen, name } = props;
+  let { name } = props;
 
   const [formValues, setFormValues] = React.useState({
     name: name,
   });
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -164,7 +149,7 @@ const UpdateView = (props) => {
 };
 
 const DeleteView = (props) => {
-  let { name, id, setOpen } = props;
+  let { name, setOpen } = props;
 
   const handleDelete = () => {};
 

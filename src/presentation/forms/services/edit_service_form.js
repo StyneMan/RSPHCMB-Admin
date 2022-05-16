@@ -81,7 +81,7 @@ const EditServiceForm = (props) => {
   const [serviceBody, setServiceBody] = React.useState(body);
   const [isError, setIsError] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
 
   const handleChange = (e) => {
     const { id, name, value } = e.target;
@@ -272,7 +272,7 @@ const EditServiceForm = (props) => {
           setValue={setServiceBody}
           error={isError}
           setError={setIsError}
-          setIsStartedFilling={setIsStartedFilling}
+          // setIsStartedFilling={setIsStartedFilling}
         />
         <br />
         <TextValidator

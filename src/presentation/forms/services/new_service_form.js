@@ -72,7 +72,7 @@ const NewServiceForm = (props) => {
   const [previewPassport, setPreviewPassport] = React.useState("");
   const [serviceBody, setServiceBody] = React.useState(null);
   const [isError, setIsError] = React.useState(false);
-  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -224,7 +224,7 @@ const NewServiceForm = (props) => {
           setValue={setServiceBody}
           error={isError}
           setError={setIsError}
-          setIsStartedFilling={setIsStartedFilling}
+          // setIsStartedFilling={setIsStartedFilling}
         />
         <br />
 

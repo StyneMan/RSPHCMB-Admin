@@ -108,18 +108,18 @@ const UpdateCovid19Form = (props) => {
     actionUrl3: actionUrl3,
   });
   const [file, setFile] = React.useState(null);
-  const [file2, setFile2] = React.useState(null);
-  const [file3, setFile3] = React.useState(null);
+  // const [file2, setFile2] = React.useState(null);
+  // const [file3, setFile3] = React.useState(null);
   const [isUploading, setIsUploading] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
   const [previewImage, setPreviewImage] = React.useState("");
-  const [previewImage2, setPreviewImage2] = React.useState("");
-  const [previewImage3, setPreviewImage3] = React.useState("");
+  // const [previewImage2, setPreviewImage2] = React.useState("");
+  // const [previewImage3, setPreviewImage3] = React.useState("");
 
-  const [isError, setIsError] = React.useState(false);
+  // const [isError, setIsError] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
 
   const handleChange = (e) => {
     const { id, name, value } = e.target;
@@ -440,12 +440,12 @@ const UpdateCovid19Form = (props) => {
                 />
 
                 <div>
-                  <Avatar
+                  {/* <Avatar
                     variant="rounded"
                     alt="Passport"
                     src={previewImage2 ? previewImage2 : image2}
                     className={classes.image}
-                  />
+                  /> */}
                 </div>
               </Box>
               <TextValidator
@@ -523,12 +523,12 @@ const UpdateCovid19Form = (props) => {
                 />
 
                 <div>
-                  <Avatar
+                  {/* <Avatar
                     variant="rounded"
                     alt="Passport"
                     src={previewImage3 ? previewImage3 : image3}
                     className={classes.image}
-                  />
+                  /> */}
                 </div>
               </Box>
               <TextValidator

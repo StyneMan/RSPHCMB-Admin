@@ -19,16 +19,13 @@ import {
   collection,
   db,
   doc,
-  ref,
-  deleteObject,
-  storage,
   deleteDoc,
 } from "../../../../../data/firebase";
 import { useSnackbar } from "notistack";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
-import { useHistory } from "react-router-dom";
-import AddDownloadForm from "../../../../forms/downloads/add_downloads";
-import UpdateDownloadForm from "../../../../forms/downloads/update_downloads";
+// import { useHistory } from "react-router-dom";
+// import AddDownloadForm from "../../../../forms/downloads/add_downloads";
+// import UpdateDownloadForm from "../../../../forms/downloads/update_downloads";
 import UpdateReportForm from "../../../../forms/reports/update_report";
 import AddReportForm from "../../../../forms/reports/add_report";
 
@@ -94,7 +91,7 @@ const ItemCard = (props) => {
   const [open, setOpen] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const history = useHistory();
+  // const history = useHistory();
 
   const deleteService = async () => {
     setOpenDelete(false);
@@ -223,13 +220,13 @@ const ItemCard = (props) => {
 
 const Reports = () => {
   const classes = useStyles();
-  const history = useHistory();
+  // const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const [reportsList, setReportsList] = React.useState(null);
 
   React.useEffect(() => {
     const q = query(collection(db, "reports"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    onSnapshot(q, (querySnapshot) => {
       const reports = [];
       querySnapshot.forEach((doc) => {
         let dat = doc.data();

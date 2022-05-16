@@ -76,7 +76,7 @@ const UpdateReportForm = (props) => {
   const [body, setBody] = React.useState(content);
   const [isError, setIsError] = React.useState(false);
   const [previewImage, setPreviewImage] = React.useState(image);
-  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -261,7 +261,7 @@ const UpdateReportForm = (props) => {
           setValue={setBody}
           error={isError}
           setError={setIsError}
-          setIsStartedFilling={setIsStartedFilling}
+          // setIsStartedFilling={setIsStartedFilling}
         />
 
         <br />

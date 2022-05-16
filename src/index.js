@@ -12,7 +12,6 @@ import {
 } from "@mui/material/styles";
 import theme from "./presentation/theme";
 import Button from "@mui/material/Button";
-import { app, analytics, auth } from "./data/firebase";
 
 const appTheme = createMuiTheme(theme);
 

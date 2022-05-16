@@ -77,7 +77,7 @@ const AddReportForm = (props) => {
   const [body, setBody] = React.useState("");
   const [isError, setIsError] = React.useState(false);
   //   const { enqueueSnackbar } = useSnackbar();
-  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
 
   const handleChange = (e) => {
     const { id, name, value } = e.target;
@@ -214,7 +214,7 @@ const AddReportForm = (props) => {
           setValue={setBody}
           error={isError}
           setError={setIsError}
-          setIsStartedFilling={setIsStartedFilling}
+          // setIsStartedFilling={setIsStartedFilling}
         />
         <br />
 

@@ -151,7 +151,7 @@ const UpdateBody = (props) => {
   const [content, setContent] = React.useState(body);
   const [isError, setError] = React.useState(false);
   const [isLoading, setLoading] = React.useState(false);
-  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -197,7 +197,7 @@ const UpdateBody = (props) => {
           setValue={setContent}
           error={isError}
           setError={setError}
-          setIsStartedFilling={setIsStartedFilling}
+          // setIsStartedFilling={setIsStartedFilling}
         />
         <br />
         <Button

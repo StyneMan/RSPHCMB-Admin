@@ -2,32 +2,32 @@ import React from "react";
 import {
   ValidatorForm,
   TextValidator,
-  SelectValidator,
+  // SelectValidator,
 } from "react-material-ui-form-validator";
-import Avatar from "@mui/material/Avatar";
+// import Avatar from "@mui/material/Avatar";
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
 import {
   db,
-  ref,
-  storage,
+  // ref,
+  // storage,
   doc,
-  uploadBytesResumable,
-  getDownloadURL,
-  query,
-  collection,
-  onSnapshot,
-  deleteObject,
+  // uploadBytesResumable,
+  // getDownloadURL,
+  // query,
+  // collection,
+  // onSnapshot,
+  // deleteObject,
   updateDoc,
 } from "../../../data/firebase";
 import { useSnackbar } from "notistack";
 import Backdrop from "@mui/material/Backdrop";
-import { Box } from "@mui/system";
+// import { Box } from "@mui/system";
 import { CircularProgress } from "@mui/material";
-import { Typography } from "@mui/material";
-import { Grid } from "@mui/material";
-import { MenuItem } from "@mui/material";
-import RichText from "../../components/misc/richtext";
+// import { Typography } from "@mui/material";
+// import { Grid } from "@mui/material";
+// import { MenuItem } from "@mui/material";
+// import RichText from "../../components/misc/richtext";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -52,7 +52,7 @@ const UpdateUserForm = (props) => {
   });
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const [isError, setIsError] = React.useState(false);
+  // const [isError, setIsError] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e) => {

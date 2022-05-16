@@ -26,7 +26,6 @@ import {
   ref,
   uploadBytesResumable,
   storage,
-  deleteObject,
   getDownloadURL,
 } from "../../../../../data/firebase";
 import CustomDialog from "../../../../components/dialogs/custom-dialog";

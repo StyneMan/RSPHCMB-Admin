@@ -10,7 +10,6 @@ import {
   doc,
   uploadBytesResumable,
   getDownloadURL,
-  deleteObject,
   updateDoc,
 } from "../../../../data/firebase";
 import { useSnackbar } from "notistack";

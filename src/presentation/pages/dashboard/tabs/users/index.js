@@ -4,22 +4,22 @@ import React from "react";
 
 import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
-import { CardActionArea, Divider } from "@mui/material";
+// import { CardActionArea, Divider } from "@mui/material";
 import CustomDialog from "../../../../components/dialogs/custom-dialog";
-import DeleteDialog from "../../../../components/dialogs/custom-dialog";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import IconButton from "@mui/material/IconButton";
-import { Edit } from "@mui/icons-material";
-import { Delete } from "@mui/icons-material";
+// import DeleteDialog from "../../../../components/dialogs/custom-dialog";
+// import Card from "@mui/material/Card";
+// import CardMedia from "@mui/material/CardMedia";
+// import IconButton from "@mui/material/IconButton";
+// import { Edit } from "@mui/icons-material";
+// import { Delete } from "@mui/icons-material";
 import Box from "@mui/system/Box";
-import { db, doc, deleteDoc } from "../../../../../data/firebase";
-import { useSnackbar } from "notistack";
-import { useHistory } from "react-router-dom";
-import EditServiceForm from "../../../../forms/services/edit_service_form";
+// import { db, doc, deleteDoc } from "../../../../../data/firebase";
+// import { useSnackbar } from "notistack";
+// import { useHistory } from "react-router-dom";
+// import EditServiceForm from "../../../../forms/services/edit_service_form";
 import CreateAdminForm from "../../../../forms/users/add_user";
 import { useSelector } from "react-redux";
-import UsersTable from "../../../../components/misc/table/users_table";
+// import UsersTable from "../../../../components/misc/table/users_table";
 import UsersTablePaginated from "../../../../components/misc/table/users_table_paginated";
 
 const useStyles = makeStyles((theme) => ({
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
 
 const User = () => {
   const classes = useStyles();
-  const history = useHistory();
+  // const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const { userData } = useSelector((state) => state.user);
 

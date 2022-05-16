@@ -2,7 +2,7 @@ import {
   Button,
   Card,
   CardContent,
-  CardMedia,
+  // CardMedia,
   Container,
   Grid,
   Typography,
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CardItem = (props) => {
   const classes = useStyles();
-  const { image, title, excerpt, to } = props;
+  const { title, excerpt, to } = props;
   const history = useHistory();
 
   return (

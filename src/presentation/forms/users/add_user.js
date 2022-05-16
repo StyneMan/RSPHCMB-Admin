@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { auth, ref, db, doc, setDoc, getDoc } from "../../../data/firebase";
+import { db, doc, setDoc, getDoc } from "../../../data/firebase";
 import { createUser } from "../../../domain/service";
 import { useSnackbar } from "notistack";
 import { SelectValidator } from "react-material-ui-form-validator";

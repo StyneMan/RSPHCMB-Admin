@@ -10,7 +10,6 @@ import { setUserID } from "./data/redux/slice/user";
 
 import ScrollToTop from "./util/scroll";
 
-import { setFAQs } from "./data/redux/slice/faqs";
 import { setTeamData } from "./data/redux/slice/team";
 import { setPermSecData } from "./data/redux/slice/perm_sec";
 import { setWDCData } from "./data/redux/slice/wdc";
@@ -54,7 +53,7 @@ function App() {
       // console.log(err);
     }
     // return () => {};
-  }, []);
+  }, [dispatch]);
 
   React.useEffect(() => {
     // const q = query(collection(db, "faqs"));

@@ -5,7 +5,7 @@ import { db, doc, updateDoc } from "../../../data/firebase";
 import { useSnackbar } from "notistack";
 import Backdrop from "@mui/material/Backdrop";
 import { CircularProgress } from "@mui/material";
-import RichText from "../../components/misc/richtext";
+// import RichText from "../../components/misc/richtext";
 import { useLocation, useHistory } from "react-router-dom";
 import { ArrowBackIosNew } from "@mui/icons-material";
 import EditableRichText from "../../components/misc/richtext/editable";
@@ -18,7 +18,7 @@ const WhoWeAreContent = (props) => {
   const [body, setBody] = React.useState(location.state?.content);
   const [isError, setIsError] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
 
   const updateData = async (e) => {
     setIsLoading(true);
@@ -68,7 +68,7 @@ const WhoWeAreContent = (props) => {
           setValue={setBody}
           error={isError}
           setError={setIsError}
-          setIsStartedFilling={setIsStartedFilling}
+          // setIsStartedFilling={setIsStartedFilling}
         />
         <br />
 

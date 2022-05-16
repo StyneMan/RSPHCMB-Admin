@@ -27,40 +27,40 @@ const ActionButton = ({ selected, list, index, lgaID }) => {
   const [openUpdate, setOpenUpdate] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
 
-  const [setLoading] = React.useState(false);
+  // const [setLoading] = React.useState(false);
 
   const openAction = Boolean(anchorEl);
-  const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
   //   const { notifications, userData } = useSelector((state) => state.user);
   const handleMoreAction = (e) => setAnchorEl(e.currentTarget);
   const handleCloseMoreAction = () => setAnchorEl(null);
 
-  const updateRow = async (index) => {
-    setLoading(true);
-    const mRef = doc(db, "lgas", "" + lgaID);
+  // const updateRow = async (index) => {
+  //   setLoading(true);
+  //   const mRef = doc(db, "lgas", "" + lgaID);
 
-    let arrCopy = list;
-    arrCopy.forEach((el, key) => {
-      if (key === index) {
-        //Update here
-      }
-    });
+  //   let arrCopy = list;
+  //   arrCopy.forEach((el, key) => {
+  //     if (key === index) {
+  //       //Update here
+  //     }
+  //   });
 
-    try {
-      await updateDoc(mRef, {
-        committees: list?.filter((el, key) => key !== index),
-      });
-      setLoading(false);
-      enqueueSnackbar(`Row deleted successfully`, {
-        variant: "success",
-      });
-    } catch (error) {
-      // setIsLoading(false);
-      enqueueSnackbar(`${error?.message || "Check your internet connection"}`, {
-        variant: "error",
-      });
-    }
-  };
+  //   try {
+  //     await updateDoc(mRef, {
+  //       committees: list?.filter((el, key) => key !== index),
+  //     });
+  //     setLoading(false);
+  //     enqueueSnackbar(`Row deleted successfully`, {
+  //       variant: "success",
+  //     });
+  //   } catch (error) {
+  //     // setIsLoading(false);
+  //     enqueueSnackbar(`${error?.message || "Check your internet connection"}`, {
+  //       variant: "error",
+  //     });
+  //   }
+  // };
 
   // const { data: scholarData } = useSWR('/applicants/scholars/' + selected.row._id, APIService.authFetcher);
 
@@ -122,7 +122,7 @@ const ActionButton = ({ selected, list, index, lgaID }) => {
 };
 
 const UpdateView = (props) => {
-  let { setOpen, name, designation } = props;
+  let { name, designation } = props;
 
   const [formValues, setFormValues] = React.useState({
     name: name,
@@ -130,7 +130,7 @@ const UpdateView = (props) => {
   });
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -186,7 +186,7 @@ const UpdateView = (props) => {
 };
 
 const DeleteView = (props) => {
-  let { list, lgaID, name, index, id, setOpen } = props;
+  let { list, lgaID, name, index, setOpen } = props;
 
   const [isLoading, setLoading] = React.useState(false);
 

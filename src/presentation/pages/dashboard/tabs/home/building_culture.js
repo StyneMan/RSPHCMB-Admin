@@ -408,7 +408,7 @@ const UpdateSummary = (props) => {
   let { setOpen, summary } = props;
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
-  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
   const [body, setBody] = React.useState(summary);
   const { enqueueSnackbar } = useSnackbar();
 
@@ -455,7 +455,7 @@ const UpdateSummary = (props) => {
           setValue={setBody}
           error={isError}
           setError={setIsError}
-          setIsStartedFilling={setIsStartedFilling}
+          // setIsStartedFilling={setIsStartedFilling}
         />
 
         <br />

@@ -23,16 +23,15 @@ const NewFacilityForm = (props) => {
     designation: "",
   });
   const [isLoading, setIsLoading] = React.useState(false);
-  const [faci, setFaci] = React.useState([]);
+  // const [faci, setFaci] = React.useState([]);
 
   const { enqueueSnackbar } = useSnackbar();
 
   React.useEffect(() => {
     if (list) {
       //   console.log(`SJHS: ${list}`);
-      setFaci(list);
-
-      setIsLoading(false);
+      // setFaci(list);
+      // setIsLoading(false);
     }
   }, [list]);
 

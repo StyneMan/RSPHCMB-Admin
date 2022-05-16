@@ -81,14 +81,14 @@ const WhoWeAreImage = (props) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e) => {
-    const { id, name, value } = e.target;
+    const { id, value } = e.target;
 
     if (id === "image") {
       setFile(e.target.files[0]);
       setPreviewImage(URL.createObjectURL(e.target.files[0]));
       setFormValues((prevData) => ({
         ...prevData,
-        image: e.target.value,
+        image: value,
       }));
     }
   };

@@ -71,7 +71,7 @@ const AddTeamMember = (props) => {
   const [progress, setProgress] = React.useState(0);
   const [bio, setBio] = React.useState();
   const [isError, setIsError] = React.useState(false);
-  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
   const [previewPassport, setPreviewPassport] = React.useState("");
 
   const { enqueueSnackbar } = useSnackbar();
@@ -217,7 +217,7 @@ const AddTeamMember = (props) => {
           setValue={setBio}
           error={isError}
           setError={setIsError}
-          setIsStartedFilling={setIsStartedFilling}
+          // setIsStartedFilling={setIsStartedFilling}
         />
         <br />
 

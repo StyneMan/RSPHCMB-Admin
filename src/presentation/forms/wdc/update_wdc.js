@@ -14,9 +14,9 @@ const UpdateWDC = () => {
   const [title, setTitle] = React.useState(location?.state?.title);
   const [body, setBody] = React.useState(location?.state?.body);
   const [isError, setIsError] = React.useState(false);
-  const [isSubmitted, setIsSubmitted] = React.useState(false);
+  // const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -27,16 +27,16 @@ const UpdateWDC = () => {
     // setFormValues((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  React.useEffect(() => {
-    if (!isSubmitted) {
-      window.addEventListener("beforeunload", () => {
-        // console.log('added');
-      });
-    }
-    return () => {
-      window.removeEventListener("beforeunload", () => console.log(""));
-    };
-  }, [isStartedFilling]);
+  // React.useEffect(() => {
+  //   if (!isSubmitted) {
+  //     window.addEventListener("beforeunload", () => {
+  //       // console.log('added');
+  //     });
+  //   }
+  //   return () => {
+  //     window.removeEventListener("beforeunload", () => console.log(""));
+  //   };
+  // }, [isStartedFilling]);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -95,7 +95,7 @@ const UpdateWDC = () => {
           setValue={setBody}
           error={isError}
           setError={setIsError}
-          setIsStartedFilling={setIsStartedFilling}
+          // setIsStartedFilling={setIsStartedFilling}
         />
         {isSubmitting && <LinearProgress />}
         <br />

@@ -1,13 +1,13 @@
 import React from "react";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import Button from "@mui/material/Button";
-import { db, updateDoc, doc } from "../../../../data/firebase";
+// import { db, doc } from "../../../../data/firebase";
 import { useSnackbar } from "notistack";
 import Backdrop from "@mui/material/Backdrop";
 import { CircularProgress } from "@mui/material";
 
 const UpdateCommitteeForm = (props) => {
-  let { setOpen, id, list, index } = props;
+  let { setOpen } = props;
   const [formValues, setFormValues] = React.useState({
     name: "",
     designation: "",
@@ -21,7 +21,7 @@ const UpdateCommitteeForm = (props) => {
   };
 
   const addRecord = async (e) => {
-    const mRef = doc(db, "lgas", "" + id);
+    // const mRef = doc(db, "lgas", "" + id);
     // list[index]
     try {
       //   await updateDoc(mRef, {

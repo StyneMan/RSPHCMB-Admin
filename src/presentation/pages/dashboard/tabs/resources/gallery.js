@@ -12,14 +12,7 @@ import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import { Delete } from "@mui/icons-material";
 import { Grid } from "@mui/material";
-import {
-  db,
-  doc,
-  ref,
-  deleteObject,
-  storage,
-  deleteDoc,
-} from "../../../../../data/firebase";
+import { db, doc, deleteDoc } from "../../../../../data/firebase";
 import { useSnackbar } from "notistack";
 import CloudOffIcon from "@mui/icons-material/CloudOff";
 import { useHistory } from "react-router-dom";

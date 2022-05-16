@@ -23,7 +23,7 @@ import {
   uploadBytesResumable,
   updateDoc,
   getDownloadURL,
-  updateEmail,
+  // updateEmail,
   updatePassword,
 } from "../../../../../data/firebase";
 import Edit from "@mui/icons-material/Edit";
@@ -121,10 +121,6 @@ const Account = () => {
   const [openLN, setOpenLN] = React.useState(false);
   const [openNum, setOpenNum] = React.useState(false);
   const [openPass, setOpenPass] = React.useState(false);
-
-  React.useEffect(() => {
-    console.log("USER DATA::", myData);
-  }, [myData]);
 
   const initials =
     myData?.firstname?.slice(0, 1).toUpperCase() +
@@ -773,7 +769,7 @@ const UpdatePassword = (props) => {
           value={formValues.oldPassword}
           placeholder="Old Password"
           variant="outlined"
-          style={{ borderColor: "red", borderWidth: 1 }}
+          style={{ borderColor: isError ? "red" : "inherit", borderWidth: 1 }}
           validators={["required"]}
           errorMessages={["Old Password is required"]}
           InputProps={{

@@ -508,12 +508,12 @@ const UpdateName = (props) => {
 };
 
 const UpdateBio = (props) => {
-  const classes = useStyles();
+  // const classes = useStyles();
   let { setOpen, id, bio } = props;
   const [body, setBody] = React.useState(bio);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
-  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -560,7 +560,7 @@ const UpdateBio = (props) => {
           setValue={setBody}
           error={isError}
           setError={setIsError}
-          setIsStartedFilling={setIsStartedFilling}
+          // setIsStartedFilling={setIsStartedFilling}
         />
 
         <Button
@@ -582,7 +582,7 @@ const UpdateMessage = (props) => {
   const [body, setBody] = React.useState(message);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
-  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -629,7 +629,7 @@ const UpdateMessage = (props) => {
           setValue={setBody}
           error={isError}
           setError={setIsError}
-          setIsStartedFilling={setIsStartedFilling}
+          // setIsStartedFilling={setIsStartedFilling}
         />
 
         <Button

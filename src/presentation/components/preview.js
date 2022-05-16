@@ -108,7 +108,20 @@ const Preview = (props) => {
         </Box>
       );
     }
-  }, []);
+  }, [
+    data?.createdAt,
+    data?.designation,
+    data?.email,
+    data?.firstname,
+    data?.fullname,
+    data?.lastname,
+    data?.name,
+    data?.phone,
+    data?.request,
+    data?.role,
+    data?.subject,
+    type,
+  ]);
 
   return body;
 };

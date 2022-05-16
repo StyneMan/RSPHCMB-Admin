@@ -31,7 +31,7 @@ Object.assign(defaultTheme, {
 });
 
 const RichText = (props) => {
-  const { value, setValue, setError, error, setIsStartedFilling } = props;
+  const { setValue, setError, error, setIsStartedFilling } = props;
 
   const handleChange = (state) => {
     const data = JSON.stringify(convertToRaw(state.getCurrentContent()));

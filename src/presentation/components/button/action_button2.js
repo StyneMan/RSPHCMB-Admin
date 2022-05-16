@@ -26,7 +26,7 @@ const ActionButton2 = ({ selected, index, setIsPerforming, list, lgaID }) => {
   const [openDelete, setOpenDelete] = React.useState(false);
 
   const openAction = Boolean(anchorEl);
-  const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
   //   const { notifications, userData } = useSelector((state) => state.user);
   const handleMoreAction = (e) => setAnchorEl(e.currentTarget);
   const handleCloseMoreAction = () => setAnchorEl(null);
@@ -87,14 +87,14 @@ const ActionButton2 = ({ selected, index, setIsPerforming, list, lgaID }) => {
 };
 
 const UpdateView = (props) => {
-  let { setOpen, name } = props;
+  let { name } = props;
 
   const [formValues, setFormValues] = React.useState({
     name: name,
   });
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { enqueueSnackbar } = useSnackbar();
+  // const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -188,6 +188,7 @@ const DeleteView = (props) => {
         </Button>
 
         <Button
+          disabled={isLoading}
           variant="contained"
           sx={{ textTransform: "none" }}
           onClick={deleteRow}

@@ -161,7 +161,7 @@ const DepartmentInfo = () => {
       setFunctions(fn);
       // dispatch(setDeptFunctions(fn));
     });
-  }, [deptFunctions, functions]);
+  }, [deptFunctions, functions, location.state?.id]);
 
   return (
     <div>

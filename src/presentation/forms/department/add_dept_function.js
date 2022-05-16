@@ -1,5 +1,5 @@
 import React from "react";
-import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { ValidatorForm } from "react-material-ui-form-validator";
 import Button from "@mui/material/Button";
 import { db, doc, setDoc } from "../../../data/firebase";
 import { useSnackbar } from "notistack";

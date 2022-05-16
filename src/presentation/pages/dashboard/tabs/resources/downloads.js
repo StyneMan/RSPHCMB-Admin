@@ -18,9 +18,9 @@ import {
   collection,
   db,
   doc,
-  ref,
-  deleteObject,
-  storage,
+  // ref,
+  // deleteObject,
+  // storage,
   deleteDoc,
 } from "../../../../../data/firebase";
 import { useSnackbar } from "notistack";
@@ -220,13 +220,13 @@ const DownloadsItemCard = (props) => {
 
 const Downloads = () => {
   const classes = useStyles();
-  const history = useHistory();
+  // const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const [downloadsList, setDownloadsList] = React.useState(null);
 
   React.useEffect(() => {
     const q = query(collection(db, "downloads"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    onSnapshot(q, (querySnapshot) => {
       const downloads = [];
       querySnapshot.forEach((doc) => {
         let dat = doc.data();
