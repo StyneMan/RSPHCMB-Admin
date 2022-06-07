@@ -9,7 +9,7 @@ import { RefreshOutlined } from "@mui/icons-material";
 // import { useDispatch } from "react-redux";
 // import { setMyData, setUserData } from "../../data/redux/slice/user";
 import { auth, sendPasswordResetEmail } from "../../data/firebase";
-import { resetPassword } from "../../domain/service";
+// import { resetPassword } from "../../domain/service";
 import image from "../../assets/images/logo.svg";
 import { useSnackbar } from "notistack";
 
