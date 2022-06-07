@@ -8,7 +8,7 @@ import { RefreshOutlined } from "@mui/icons-material";
 
 // import { useDispatch } from "react-redux";
 // import { setMyData, setUserData } from "../../data/redux/slice/user";
-import { auth } from "../../data/firebase";
+import { auth, sendPasswordResetEmail } from "../../data/firebase";
 import { resetPassword } from "../../domain/service";
 import image from "../../assets/images/logo.svg";
 import { useSnackbar } from "notistack";
@@ -28,14 +28,17 @@ const PasswordForm = () => {
 
   const submitForm = async (e) => {
     setIsLoading(true);
-    resetPassword(auth, formValues.email)
-      .then((resp) => {
+
+    sendPasswordResetEmail(auth, formValues.email)
+      .then(() => {
         setIsLoading(false);
         enqueueSnackbar(`Password reset link sent to ${formValues.email}`, {
           variant: "success",
         });
       })
       .catch((error) => {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
         setIsLoading(false);
         enqueueSnackbar(
           `${error?.message || "Check your internet connection!"}`,
@@ -127,7 +130,7 @@ const PasswordForm = () => {
               variant="contained"
             >
               {" "}
-              Sign in
+              Send Now
             </Button>
           </Box>
         </ValidatorForm>

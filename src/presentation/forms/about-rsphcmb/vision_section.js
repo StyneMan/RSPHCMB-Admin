@@ -81,7 +81,7 @@ const VisionSection = () => {
   const [missionBody, setMissionBody] = React.useState(null);
   const [previewImage, setPreviewImage] = React.useState("");
   const [isError, setIsError] = React.useState(false);
-  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -99,6 +99,12 @@ const VisionSection = () => {
       setFormValues((prevData) => ({ ...prevData, [name]: value }));
     }
   };
+
+  React.useEffect(() => {
+    if (isStartedFilling) {
+      //Do nothing
+    }
+  }, [isStartedFilling]);
 
   const uploadNewImage = () => {
     setIsUploading(true);
@@ -265,7 +271,7 @@ const VisionSection = () => {
           setValue={setMissionBody}
           error={isError}
           setError={setIsError}
-          // setIsStartedFilling={setIsStartedFilling}
+          setIsStartedFilling={setIsStartedFilling}
         />
 
         <Button

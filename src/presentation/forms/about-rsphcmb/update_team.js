@@ -76,7 +76,7 @@ const UpdateTeamForm = (props) => {
   const [progress, setProgress] = React.useState(0);
   const [bio, setBio] = React.useState(biography);
   const [isError, setIsError] = React.useState(false);
-  // const [isStartedFilling, setIsStartedFilling] = React.useState(false);
+  const [isStartedFilling, setIsStartedFilling] = React.useState(false);
   const [previewImage, setPreviewImage] = React.useState("");
 
   const { enqueueSnackbar } = useSnackbar();
@@ -95,6 +95,12 @@ const UpdateTeamForm = (props) => {
       setFormValues((prevData) => ({ ...prevData, [name]: value }));
     }
   };
+
+  React.useEffect(() => {
+    if (isStartedFilling) {
+      // Do nothing here...
+    }
+  }, [isStartedFilling]);
 
   const uploadNewImage = () => {
     setIsUploading(true);
@@ -269,7 +275,7 @@ const UpdateTeamForm = (props) => {
           setValue={setBio}
           error={isError}
           setError={setIsError}
-          // setIsStartedFilling={setIsStartedFilling}
+          setIsStartedFilling={setIsStartedFilling}
         />
         <br />
 

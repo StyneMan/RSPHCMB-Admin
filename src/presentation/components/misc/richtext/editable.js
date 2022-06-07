@@ -51,6 +51,11 @@ const EditableRichText = (props) => {
   //   const content = convertFromRaw(JSON.parse(value));
   //   const content = EditorState.createWithContent(state);/
 
+  React.useEffect(() => {
+    // if (setIsStartedFilling)
+    //Just do nothing right here...
+  }, [setIsStartedFilling]);
+
   const handleChange = (state) => {
     // const data = JSON.stringify(convertToRaw(state.getCurrentContent()));
 
@@ -59,7 +64,7 @@ const EditableRichText = (props) => {
     }
 
     if (state.getCurrentContent().hasText()) {
-      setIsStartedFilling(true);
+      // setIsStartedFilling(true);
       //   setValue(data);
     }
   };
