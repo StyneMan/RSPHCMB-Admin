@@ -56,14 +56,6 @@ const PasswordForm = () => {
         flexDirection="column"
         justifyContent={"start"}
       >
-        {/* <Typography
-          gutterBottom
-          fontSize={18}
-          fontWeight="600"
-          textAlign={"center"}
-        >
-          Forgot Password?
-        </Typography> */}
         <Box
           display="flex"
           flexDirection="column"
