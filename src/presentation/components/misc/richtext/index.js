@@ -46,10 +46,7 @@ const RichText = (props) => {
     }
   };
 
-  const save = (data) => {
-    // save this data somewhere
-    // console.log(data);
-  };
+  const save = (data) => {};
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -72,8 +69,6 @@ const RichText = (props) => {
           "clear",
           "save",
         ]}
-        // defaultValue={value}
-
         error={error}
         label="Type here..."
         toolbarButtonSize="small"
